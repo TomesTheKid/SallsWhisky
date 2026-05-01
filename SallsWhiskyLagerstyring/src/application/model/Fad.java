@@ -1,6 +1,8 @@
 package application.model;
 
-public class Fad {
+import java.io.Serializable;
+
+public class Fad implements Serializable {
     private int nummer;
     private String leverandør;
     private String land;

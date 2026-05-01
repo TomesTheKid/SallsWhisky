@@ -1,8 +1,9 @@
 package application.model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Destillat {
+public class Destillat implements Serializable {
     private LocalDate startDato;
     private LocalDate slutDato;
     private String maltbatch;
@@ -49,7 +50,7 @@ public class Destillat {
         return kornsort;
     }
 
-    public double getMængdeVæske() {
+    public double getMaengdeVaeske() {
         return mængdeVæske;
     }
 
@@ -73,12 +74,20 @@ public class Destillat {
         return ID;
     }
 
-    public double getAktuelMængdeVæske() {
+    public double getAktuelMaengdeVaeske() {
         return aktuelMængdeVæske;
     }
     //----------------------------------------------------------------
 
-    public void afslutDestilering(){
+    public void afslutDestillering(){
         this.slutDato = LocalDate.now();
+    }
+
+    @Override
+    public String toString() {
+        return "Destillat{" +
+                "ID=" + ID +
+                ", aktuelMængdeVæske=" + aktuelMængdeVæske +
+                '}';
     }
 }

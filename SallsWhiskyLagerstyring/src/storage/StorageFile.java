@@ -1,24 +1,29 @@
 package storage;
 
+import application.controller.Storage;
 import application.model.Destillat;
 import application.model.Fad;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StorageFile {
+public class StorageFile implements Storage, Serializable {
 
-    private final List<Destillat> distillater = new ArrayList<>();
+    private final List<Destillat> destillater = new ArrayList<>();
     private final List<Fad> fade = new ArrayList<>();
 
     //-----------------------------------------------
     //Destillat
-    public List<Destillat> getDistillater() {
-        return new ArrayList<>(distillater);
-    }
+
 
     public void addDestillat(Destillat destillat){
-        distillater.add(destillat);
+        destillater.add(destillat);
+    }
+
+    @Override
+    public List<Destillat> getDestillater() {
+        return new ArrayList<>(destillater);
     }
 
     //-----------------------------------------------
