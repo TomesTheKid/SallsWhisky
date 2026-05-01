@@ -78,4 +78,7 @@ public class Destillat {
     }
     //----------------------------------------------------------------
 
+    public void afslutDestileringen(){
+        this.slutDato = LocalDate.now();
+    }
 }
