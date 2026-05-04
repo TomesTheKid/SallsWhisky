@@ -2,6 +2,8 @@ package guifx;
 
 import application.controller.Controller;
 import java.time.LocalDate;
+
+import application.model.Kornsort;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -115,6 +117,8 @@ public class DestillatWindow extends Stage {
         GridPane.setHalignment(btnOK, HPos.RIGHT);
         btnOK.setOnAction(event -> okAction());
 
+
+
         lblError = new Label();
         pane.add(lblError, 0, 7, 4, 1);
         lblError.setStyle("-fx-text-fill: red");
@@ -134,12 +138,13 @@ public class DestillatWindow extends Stage {
             int newMakeNr = Integer.parseInt(newMakeText);
             int id = Integer.parseInt(txfId.getText().trim());
             double aktuelMaengde = Double.parseDouble(txfAktuelMaengde.getText().trim());
+            Kornsort kornsort = Kornsort.valueOf(txfKornsort.getText().trim().toUpperCase());
 
             Controller.createDestillat(
                     dpStart.getValue(),
                     dpSlut.getValue(),
                     txfMaltbatch.getText().trim(),
-                    txfKornsort.getText().trim(),
+                    kornsort,
                     Double.parseDouble(txfMaengde.getText().trim()),
                     Double.parseDouble(txfAlkohol.getText().trim()),
                     txfRoeg.getText().trim(),

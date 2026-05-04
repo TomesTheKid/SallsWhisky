@@ -73,7 +73,7 @@ public class DestilleringPane extends GridPane {
                 + "\nNew make nr: " + destillat.getNewMakeNr()
                 + "\nPeriode: " + destillat.getStartDato() + " til " + destillat.getSlutDato()
                 + "\nMaltbatch: " + destillat.getMaltbatch()
-                + "\nKornsort: " + (destillat.getKornsort() == null || destillat.getKornsort().isBlank() ? "-" : destillat.getKornsort())
+                + "\nKornsort: " + (destillat.getKornsort() == null ? "-" : destillat.getKornsort().name())
                 + "\nMaengde/rest: " + String.format("%.1f", destillat.getMaengdeVaeske()) + " / "
                 + String.format("%.1f", destillat.getAktuelMaengdeVaeske()) + " L"
                 + "\nAlkoholprocent: " + String.format("%.1f", destillat.getAlkoholprocent()) + "%"

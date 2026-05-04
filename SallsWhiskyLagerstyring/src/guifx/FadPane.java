@@ -75,7 +75,7 @@ public class FadPane extends GridPane {
                 + "\nLand: " + (fad.getLand() == null || fad.getLand().isBlank() ? "-" : fad.getLand())
                 + "\nAntal brug: " + fad.getAntalBrug()
                 + "\nTidligere alkoholindhold: "
-                + (fad.getTidligereAlkoholindhold() == null || fad.getTidligereAlkoholindhold().isBlank() ? "-" : fad.getTidligereAlkoholindhold())
+                + (fad.getTidligereAlkoholindhold() == null ? "-" : fad.getTidligereAlkoholindhold().name())
                 + "\nStørrelse: " + String.format("%.1f", fad.getStørrelse()) + " L";
         txaFadDetaljer.setText(text);
     }
