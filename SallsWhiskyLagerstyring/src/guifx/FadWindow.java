@@ -1,6 +1,7 @@
 package guifx;
 
 import application.controller.Controller;
+import application.model.Alkoholtype;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -100,12 +101,13 @@ public class FadWindow extends Stage {
             int nummer = Integer.parseInt(nummerText);
             int antalBrug = Integer.parseInt(txfAntalBrug.getText().trim());
             double storrelse = Double.parseDouble(txfStorrelse.getText().trim());
+            Alkoholtype alkoholtype = Alkoholtype.valueOf(txfTidligereAlkoholindhold.getText().trim().toUpperCase());
             Controller.createFad(
                     nummer,
                     txfLeverandør.getText().trim(),
                     txfLand.getText().trim(),
                     antalBrug,
-                    txfTidligereAlkoholindhold.getText().trim(),
+                    alkoholtype,
                     storrelse
             );
             hide();

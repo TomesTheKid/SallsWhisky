@@ -1,7 +1,9 @@
 package application.controller;
 
+import application.model.Alkoholtype;
 import application.model.Destillat;
 import application.model.Fad;
+import application.model.Kornsort;
 import storage.StorageFile;
 
 import java.time.LocalDate;
@@ -28,7 +30,7 @@ public class Controller {
     public static Destillat createDestillat(LocalDate startDato,
                                             LocalDate slutDato,
                                             String maltbatch,
-                                            String kornsort,
+                                            Kornsort kornsort,
                                             double mængdeVæske,
                                             double alkoholprocent,
                                             String rygemateriale,
@@ -56,7 +58,7 @@ public class Controller {
                                 String leverandør,
                                 String land,
                                 int antalBrug,
-                                String tidligereAlkoholindhold,
+                                Alkoholtype tidligereAlkoholindhold,
                                 double størrelse){
         Fad fad = new Fad(nummer, leverandør, land, antalBrug, tidligereAlkoholindhold, størrelse);
         storage.addFad(fad);

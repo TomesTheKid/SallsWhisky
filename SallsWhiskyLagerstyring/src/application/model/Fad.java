@@ -7,11 +7,11 @@ public class Fad implements Serializable {
     private String leverandør;
     private String land;
     private int antalBrug;
-    private String tidligereAlkoholindhold;
+    private Alkoholtype tidligereAlkoholindhold;
     private double størrelse;
     //private Lokation lokation
 
-    public Fad(int nummer, String leverandør, String land, int antalBrug, String tidligereAlkoholindhold, double størrelse){
+    public Fad(int nummer, String leverandør, String land, int antalBrug, Alkoholtype tidligereAlkoholindhold, double størrelse){
         this.nummer = nummer;
         this.leverandør = leverandør;
         this.land = land;
@@ -39,7 +39,7 @@ public class Fad implements Serializable {
         return antalBrug;
     }
 
-    public String getTidligereAlkoholindhold() {
+    public Alkoholtype getTidligereAlkoholindhold() {
         return tidligereAlkoholindhold;
     }
 

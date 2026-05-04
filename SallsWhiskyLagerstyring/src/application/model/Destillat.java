@@ -7,7 +7,7 @@ public class Destillat implements Serializable {
     private LocalDate startDato;
     private LocalDate slutDato;
     private String maltbatch;
-    private String kornsort;
+    private final Kornsort kornsort;
     private double mængdeVæske;
     private double alkoholprocent;
     private String rygemateriale;
@@ -17,7 +17,7 @@ public class Destillat implements Serializable {
     private double aktuelMængdeVæske;
 
 
-    public Destillat(LocalDate startDato, LocalDate slutDato, String maltbatch, String kornsort,
+    public Destillat(LocalDate startDato, LocalDate slutDato, String maltbatch, Kornsort kornsort,
                      double mængdeVæske, double alkoholprocent, String rygemateriale, String kommentar,
                      int newMakeNr, int ID, double aktuelMængdeVæske) {
         this.startDato = startDato;
@@ -46,7 +46,7 @@ public class Destillat implements Serializable {
         return maltbatch;
     }
 
-    public String getKornsort() {
+    public Kornsort getKornsort() {
         return kornsort;
     }
 
