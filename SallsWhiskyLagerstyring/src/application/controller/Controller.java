@@ -64,4 +64,6 @@ public class Controller {
     public static List<Destillat> getDestillater() {
         return new ArrayList<>(storage.getDestillater());
     }
+
+    public static List<Fad> getFade(){return new ArrayList<>(storage.getFade());}
 }

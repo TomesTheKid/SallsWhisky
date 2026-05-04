@@ -43,7 +43,9 @@ public class Fad implements Serializable {
         return tidligereAlkoholindhold;
     }
 
-//    public Lokation getLokation(){
+    public double getStørrelse() { return størrelse;}
+
+    //    public Lokation getLokation(){
 //        return lokation;
 //    }
     //------------------------------------------------------------------------------------
@@ -51,4 +53,13 @@ public class Fad implements Serializable {
     //TODO
     //public void flytFad(Lokation lokation){
     // }
+
+
+    @Override
+    public String toString() {
+        return "Fad{" +
+                "nummer=" + nummer +
+                ", tidligereAlkoholindhold='" + tidligereAlkoholindhold + '\'' +
+                '}';
+    }
 }
