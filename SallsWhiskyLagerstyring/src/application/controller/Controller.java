@@ -21,6 +21,10 @@ public class Controller {
     //-----------------------------------
 
     //CreateMetoder
+    /*
+     Kommentar må gerne være null
+     aktuelMængdeVæske må gerne være null
+     */
     public static Destillat createDestillat(LocalDate startDato,
                                             LocalDate slutDato,
                                             String maltbatch,
