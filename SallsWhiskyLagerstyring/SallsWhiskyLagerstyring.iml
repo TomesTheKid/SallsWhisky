@@ -6,7 +6,8 @@
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
-    <orderEntry type="library" exported="" name="javafx-sdk-21.0" level="application" />
+    <orderEntry type="library" exported="" name="openjfx.javafx.controls" level="application" />
+    <orderEntry type="library" name="javafx-sdk-21.0" level="application" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="lib" level="project" />
   </component>
