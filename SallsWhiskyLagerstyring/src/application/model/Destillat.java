@@ -1,28 +1,36 @@
 package application.model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Destillat {
+public class Destillat implements Serializable {
     private LocalDate startDato;
     private LocalDate slutDato;
     private String maltbatch;
-    private String kornsort;
+    private final Kornsort kornsort;
     private double mængdeVæske;
     private double alkoholprocent;
     private String rygemateriale;
     private String kommentar;
+    private int newMakeNr;
+    private int ID;
+    private double aktuelMængdeVæske;
 
 
-    public Destillat(LocalDate slutDato, LocalDate startDato, String maltbatch, String kornsort,
-                     double mængdeVæske, double alkoholprocent, String rygemateriale, String kommentar) {
-        this.slutDato = slutDato;
+    public Destillat(LocalDate startDato, LocalDate slutDato, String maltbatch, Kornsort kornsort,
+                     double mængdeVæske, double alkoholprocent, String rygemateriale, String kommentar,
+                     int newMakeNr, int ID, double aktuelMængdeVæske) {
         this.startDato = startDato;
+        this.slutDato = slutDato;
         this.maltbatch = maltbatch;
         this.kornsort = kornsort;
         this.mængdeVæske = mængdeVæske;
         this.alkoholprocent = alkoholprocent;
         this.rygemateriale = rygemateriale;
         this.kommentar = kommentar;
+        this.newMakeNr = newMakeNr;
+        this.ID = ID;
+        this.aktuelMængdeVæske = aktuelMængdeVæske;
     }
 
     //Alle get metoder
@@ -38,11 +46,11 @@ public class Destillat {
         return maltbatch;
     }
 
-    public String getKornsort() {
+    public Kornsort getKornsort() {
         return kornsort;
     }
 
-    public double getMængdeVæske() {
+    public double getMaengdeVaeske() {
         return mængdeVæske;
     }
 
@@ -57,6 +65,29 @@ public class Destillat {
     public String getKommentar() {
         return kommentar;
     }
+
+    public int getNewMakeNr() {
+        return newMakeNr;
+    }
+
+    public int getID() {
+        return ID;
+    }
+
+    public double getAktuelMaengdeVaeske() {
+        return aktuelMængdeVæske;
+    }
     //----------------------------------------------------------------
 
+    public void afslutDestillering(){
+        this.slutDato = LocalDate.now();
+    }
+
+    @Override
+    public String toString() {
+        return "Destillat{" +
+                "ID=" + ID +
+                ", aktuelMængdeVæske=" + aktuelMængdeVæske +
+                '}';
+    }
 }
