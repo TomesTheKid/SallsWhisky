@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface Storage {
     void addDestillat(Destillat destillat);
+    void removeDestillat(Destillat destillat);
     List<Destillat> getDestillater();
 
     void addFad(Fad fad);

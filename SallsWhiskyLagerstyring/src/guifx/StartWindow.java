@@ -11,7 +11,7 @@ public class StartWindow extends Application {
     private Stage stage;
     private DestilleringPane destilleringPane;
     private Pane lagerPane;
-    private Pane fadePane;
+    private FadPane fadPane;
     private Pane whiskyPane;
 
     @Override
@@ -19,7 +19,7 @@ public class StartWindow extends Application {
         this.stage = stage;
         this.lagerPane = new Pane();
         this.destilleringPane = new DestilleringPane(stage);
-        this.fadePane = new Pane();
+        this.fadPane = new FadPane(stage);
         this.whiskyPane = new Pane();
         initContent();
         stage.show();
@@ -31,7 +31,7 @@ public class StartWindow extends Application {
         TabPane tabs = new TabPane();
         Tab tabLager = new Tab("Lager", lagerPane);
         Tab tabDestilleringer = new Tab("Destilleringer", destilleringPane);
-        Tab tabFade = new Tab("Fade", fadePane);
+        Tab tabFade = new Tab("Fade", fadPane);
         Tab tabWhisky = new Tab("Whisky produkter", whiskyPane);
         tabLager.setClosable(false);
         tabDestilleringer.setClosable(false);

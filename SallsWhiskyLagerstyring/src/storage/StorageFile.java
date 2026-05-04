@@ -17,25 +17,33 @@ public class StorageFile implements Storage, Serializable {
     //Destillat
 
 
-    public void addDestillat(Destillat destillat){
-        destillater.add(destillat);
-    }
-
     @Override
     public List<Destillat> getDestillater() {
         return new ArrayList<>(destillater);
     }
 
+    @Override
+    public void addDestillat(Destillat destillat){
+        destillater.add(destillat);
+    }
+
+    @Override
+    public void removeDestillat(Destillat destillat){destillater.remove(destillat);}
+
     //-----------------------------------------------
     //Fad
+
+    @Override
     public List<Fad> getFade(){
         return new ArrayList<>(fade);
     }
 
+    @Override
     public void addFad(Fad fad){
         fade.add(fad);
     }
 
+    @Override
     public void removeFad(Fad fad){
         fade.remove(fad);
     }

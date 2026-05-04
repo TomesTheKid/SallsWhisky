@@ -21,6 +21,10 @@ public class Controller {
     //-----------------------------------
 
     //CreateMetoder
+    /*
+     Kommentar må gerne være null
+     aktuelMængdeVæske må gerne være null
+     */
     public static Destillat createDestillat(LocalDate startDato,
                                             LocalDate slutDato,
                                             String maltbatch,
@@ -64,4 +68,6 @@ public class Controller {
     public static List<Destillat> getDestillater() {
         return new ArrayList<>(storage.getDestillater());
     }
+
+    public static List<Fad> getFade(){return new ArrayList<>(storage.getFade());}
 }
