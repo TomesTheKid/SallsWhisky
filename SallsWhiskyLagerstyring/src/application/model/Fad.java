@@ -22,6 +22,7 @@ public class Fad implements Serializable {
         this.størrelse = størrelse;
         //this.loktaion = lokation;
         //Husk at tilføje lokation
+
     }
 
     //Alle get metoder
@@ -52,7 +53,6 @@ public class Fad implements Serializable {
 //    }
     //------------------------------------------------------------------------------------
     //Link til Påfyldning-Klasse
-
     public ArrayList<Påfyldning> getPåfyldninger() {
         return new ArrayList<>(påfyldninger);
     }
@@ -71,6 +71,10 @@ public class Fad implements Serializable {
         }
     }
     //-----------------------------------
+    public void optælAntalBrug(){
+        antalBrug++;
+    }
+    //-----------------------------
 
     //TODO
     //public void flytFad(Lokation lokation){
