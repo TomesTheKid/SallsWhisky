@@ -12,12 +12,11 @@ public class Påfyldning implements Serializable {
     private ArrayList<VæskeMængde> væskeMængder = new ArrayList<>();
 
     public Påfyldning(LocalDate dato, String ansvarlig, Fad fad,
-                      int fillNr, ArrayList<VæskeMængde> væskeMængder){
+                      int fillNr){
         this.dato = dato;
         this.ansvarlig = ansvarlig;
         this.fad = fad;
         this.fillNr = fillNr;
-        this.væskeMængder = væskeMængder;
     }
 
     //Get metoder
