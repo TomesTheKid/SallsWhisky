@@ -24,6 +24,8 @@ public class Controller {
      Kommentar må gerne være null
      aktuelMængdeVæske må gerne være null
      */
+    //TODO
+    //Sikre at slutdato ikke er før startdato
     public static Destillat createDestillat(LocalDate startDato,
                                             LocalDate slutDato,
                                             String maltbatch,
