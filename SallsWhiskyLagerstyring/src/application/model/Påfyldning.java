@@ -1,18 +1,23 @@
 package application.model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
-public class Påfyldning {
+public class Påfyldning implements Serializable {
     private LocalDate dato;
     private String ansvarlig;
     private Fad fad;
     private int fillNr;
+    private ArrayList<VæskeMængde> væskeMængder = new ArrayList<>();
 
-    public Påfyldning(LocalDate dato, String ansvarlig, Fad fad, int fillNr){
+    public Påfyldning(LocalDate dato, String ansvarlig, Fad fad,
+                      int fillNr, ArrayList<VæskeMængde> væskeMængder){
         this.dato = dato;
         this.ansvarlig = ansvarlig;
         this.fad = fad;
         this.fillNr = fillNr;
+        this.væskeMængder = væskeMængder;
     }
 
     //Get metoder
@@ -48,13 +53,17 @@ public class Påfyldning {
 
     //-----------------------------------------------
 
-    //TODO
-//    public væskeMængde createVæskeMængde(){
-//        return væskeMængde;
-//    }
+    public VæskeMængde createVæskeMængde(double mængde, Destillat destillat){
+        VæskeMængde væskeMængde = new VæskeMængde(mængde, destillat);
+        væskeMængder.add(væskeMængde);
+        return væskeMængde;
+    }
 
-    //TODO
-//    public double getSamletPåfyldtMængde(){
-//        return 0;
-//    }
+    public double getSamletPåfyldtMængde(){
+        double sum = 0;
+        for (VæskeMængde v : væskeMængder){
+            sum += v.getMængde();
+        }
+        return sum;
+    }
 }

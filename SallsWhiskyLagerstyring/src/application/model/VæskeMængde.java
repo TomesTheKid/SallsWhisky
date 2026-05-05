@@ -1,6 +1,8 @@
 package application.model;
 
-public class VæskeMængde {
+import java.io.Serializable;
+
+public class VæskeMængde implements Serializable {
     private double mængde;
     private Destillat destillat;
 
