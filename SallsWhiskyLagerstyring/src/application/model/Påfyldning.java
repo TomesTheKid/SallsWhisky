@@ -72,4 +72,9 @@ public class Påfyldning implements Serializable {
         }
         return sum;
     }
+
+    @Override
+    public String toString() {
+        return "Dato=" + dato + ", ansvarlig=" + ansvarlig + ", fillNr=" + fillNr + ", væsker=" + væskeMængder;
+    }
 }
