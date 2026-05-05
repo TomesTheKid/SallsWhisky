@@ -58,17 +58,13 @@ public class Fad implements Serializable {
     }
 
     public void addPåfyldning(Påfyldning påfyldning){
-        if (!påfyldninger.contains(påfyldning)){
+        if (påfyldning != null && !påfyldninger.contains(påfyldning)){
             påfyldninger.add(påfyldning);
-            påfyldning.setFad(this);
         }
     }
 
     public void removePåfyldning(Påfyldning påfyldning){
-        if (påfyldninger.contains(påfyldning)){
-            påfyldninger.contains(påfyldning);
-            påfyldning.setFad(this);
-        }
+        påfyldninger.remove(påfyldning);
     }
     //-----------------------------------
 

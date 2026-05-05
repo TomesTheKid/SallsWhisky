@@ -1,9 +1,6 @@
 package application.controller;
 
-import application.model.Alkoholtype;
-import application.model.Destillat;
-import application.model.Fad;
-import application.model.Kornsort;
+import application.model.*;
 import storage.StorageFile;
 
 import java.time.LocalDate;
@@ -63,6 +60,29 @@ public class Controller {
         Fad fad = new Fad(nummer, leverandør, land, antalBrug, tidligereAlkoholindhold, størrelse);
         storage.addFad(fad);
         return fad;
+    }
+
+
+    public static Påfyldning createPåfyldning(LocalDate dato,
+                                              String ansvarlig,
+                                              Fad fad,
+                                              int fillNr,
+                                              List<VæskeMængde> væskeMængder) {
+        if (fad == null) {
+            throw new IllegalArgumentException("Fad mangler");
+        }
+        if (væskeMængder == null || væskeMængder.isEmpty()) {
+            throw new IllegalArgumentException("Ingen væske angivet");
+        }
+
+        Påfyldning påfyldning = new Påfyldning(dato, ansvarlig, fad, fillNr);
+        for(VæskeMængde vm : væskeMængder){
+            påfyldning.createVæskeMængde(vm.getMængde(), vm.getDestillat());
+            vm.getDestillat().reducerAktuelMængdeVæske(vm.getMængde());
+        }
+
+        fad.addPåfyldning(påfyldning);
+        return påfyldning;
     }
 
     // Get metode

@@ -83,6 +83,16 @@ public class Destillat implements Serializable {
         this.slutDato = LocalDate.now();
     }
 
+    public void reducerAktuelMængdeVæske(double mængde){
+        if(mængde < 0){
+            return;
+        }
+        if(mængde > aktuelMængdeVæske){
+            throw new IllegalArgumentException("Ikke nok destillat tilbage");
+        }
+        aktuelMængdeVæske -= mængde;
+    }
+
     @Override
     public String toString() {
         return "Destillat{" +
