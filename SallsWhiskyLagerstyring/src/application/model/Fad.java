@@ -1,6 +1,7 @@
 package application.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Fad implements Serializable {
     private int nummer;
@@ -9,6 +10,7 @@ public class Fad implements Serializable {
     private int antalBrug;
     private Alkoholtype tidligereAlkoholindhold;
     private double størrelse;
+    private final ArrayList<Påfyldning> påfyldninger = new ArrayList<>();
     //private Lokation lokation
 
     public Fad(int nummer, String leverandør, String land, int antalBrug, Alkoholtype tidligereAlkoholindhold, double størrelse){
@@ -49,6 +51,26 @@ public class Fad implements Serializable {
 //        return lokation;
 //    }
     //------------------------------------------------------------------------------------
+    //Link til Påfyldning-Klasse
+
+    public ArrayList<Påfyldning> getPåfyldninger() {
+        return new ArrayList<>(påfyldninger);
+    }
+
+    public void addPåfyldning(Påfyldning påfyldning){
+        if (!påfyldninger.contains(påfyldning)){
+            påfyldninger.add(påfyldning);
+            påfyldning.setFad(this);
+        }
+    }
+
+    public void removePåfyldning(Påfyldning påfyldning){
+        if (påfyldninger.contains(påfyldning)){
+            påfyldninger.contains(påfyldning);
+            påfyldning.setFad(this);
+        }
+    }
+    //-----------------------------------
 
     //TODO
     //public void flytFad(Lokation lokation){
