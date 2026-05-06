@@ -13,7 +13,6 @@ class PåfyldningTest {
     private LocalDate dato;
     private String ansvarlig;
     private Fad oldFad;
-    private int fillNr;
     private ArrayList<VæskeMængde> væskeMængder = new ArrayList<>();
 
     @BeforeEach
@@ -21,9 +20,7 @@ class PåfyldningTest {
         dato = LocalDate.of(2026,5,5);
         ansvarlig = "Bo";
         oldFad = new Fad(1,"Lars","Spanien", 1,Alkoholtype.RØDVIN, 300);
-        fillNr = 1;
-        testPåfyldning = new Påfyldning(dato, ansvarlig, oldFad, fillNr);
-
+        testPåfyldning = new Påfyldning(dato, ansvarlig, oldFad);
     }
 
     @Test
@@ -32,7 +29,6 @@ class PåfyldningTest {
         assertEquals(dato, testPåfyldning.getDato());
         assertEquals(ansvarlig, testPåfyldning.getAnsvarlig());
         assertEquals(oldFad, testPåfyldning.getFad());
-        assertEquals(fillNr, testPåfyldning.getFillNr());
 
         assertEquals(2, oldFad.getAntalBrug());
     }
@@ -79,7 +75,5 @@ class PåfyldningTest {
         VæskeMængde v2 = testPåfyldning.createVæskeMængde(150, d2);
 
         assertEquals(250,testPåfyldning.getSamletPåfyldtMængde());
-
-
     }
 }

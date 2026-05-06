@@ -8,15 +8,12 @@ public class Påfyldning implements Serializable {
     private LocalDate dato;
     private String ansvarlig;
     private Fad fad;
-    private int fillNr;
     private ArrayList<VæskeMængde> væskeMængder = new ArrayList<>();
 
-    public Påfyldning(LocalDate dato, String ansvarlig, Fad fad,
-                      int fillNr){
+    public Påfyldning(LocalDate dato, String ansvarlig, Fad fad){
         this.dato = dato;
         this.ansvarlig = ansvarlig;
         this.fad = fad;
-        this.fillNr = fillNr;
         fad.optælAntalBrug();
     }
 
@@ -27,10 +24,6 @@ public class Påfyldning implements Serializable {
 
     public String getAnsvarlig() {
         return ansvarlig;
-    }
-
-    public int getFillNr() {
-        return fillNr;
     }
 
     public ArrayList<VæskeMængde> getVæskeMængder() {
@@ -57,8 +50,6 @@ public class Påfyldning implements Serializable {
     }
 
     //-----------------------------------------------
-    //TODO
-    //Hvis samlede mængde er større en fad
     public VæskeMængde createVæskeMængde(double mængde, Destillat destillat){
         VæskeMængde væskeMængde = new VæskeMængde(mængde, destillat);
         væskeMængder.add(væskeMængde);
@@ -75,6 +66,6 @@ public class Påfyldning implements Serializable {
 
     @Override
     public String toString() {
-        return "Dato=" + dato + ", ansvarlig=" + ansvarlig + ", fillNr=" + fillNr + ", væsker=" + væskeMængder;
+        return "Dato=" + dato + ", ansvarlig=" + ansvarlig + ", væsker=" + væskeMængder;
     }
 }

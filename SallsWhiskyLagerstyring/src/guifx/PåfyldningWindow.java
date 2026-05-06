@@ -179,7 +179,6 @@ public class PåfyldningWindow extends Stage {
                 dpDato.getValue(),
                 ansvarlig,
                 fad,
-                fillNr,
                 væskeList
         );
         hide();
