@@ -17,6 +17,7 @@ public class Påfyldning implements Serializable {
         this.ansvarlig = ansvarlig;
         this.fad = fad;
         this.fillNr = fillNr;
+        fad.optælAntalBrug();
     }
 
     //Get metoder
@@ -31,6 +32,11 @@ public class Påfyldning implements Serializable {
     public int getFillNr() {
         return fillNr;
     }
+
+    public ArrayList<VæskeMængde> getVæskeMængder() {
+        return new ArrayList<>(væskeMængder);
+    }
+
     //-------------------------------------------------
     //Link til Fad-Klasse
     public Fad getFad() {
@@ -51,7 +57,8 @@ public class Påfyldning implements Serializable {
     }
 
     //-----------------------------------------------
-
+    //TODO
+    //Hvis samlede mængde er større en fad
     public VæskeMængde createVæskeMængde(double mængde, Destillat destillat){
         VæskeMængde væskeMængde = new VæskeMængde(mængde, destillat);
         væskeMængder.add(væskeMængde);
@@ -64,5 +71,10 @@ public class Påfyldning implements Serializable {
             sum += v.getMængde();
         }
         return sum;
+    }
+
+    @Override
+    public String toString() {
+        return "Dato=" + dato + ", ansvarlig=" + ansvarlig + ", fillNr=" + fillNr + ", væsker=" + væskeMængder;
     }
 }

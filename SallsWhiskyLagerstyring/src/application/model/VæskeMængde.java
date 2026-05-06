@@ -27,4 +27,9 @@ public class VæskeMængde implements Serializable {
         }
     }
     //---------------------------------------------
+
+    @Override
+    public String toString() {
+        return String.format("%.1f L af %s", mængde, destillat);
+    }
 }
