@@ -68,7 +68,6 @@ public class Controller {
     public static Påfyldning createPåfyldning(LocalDate dato,
                                               String ansvarlig,
                                               Fad fad,
-                                              int fillNr,
                                               List<VæskeMængde> væskeMængder) {
         if (fad == null) {
             throw new IllegalArgumentException("Fad mangler");
@@ -77,7 +76,7 @@ public class Controller {
             throw new IllegalArgumentException("Ingen væske angivet");
         }
 
-        Påfyldning påfyldning = new Påfyldning(dato, ansvarlig, fad, fillNr);
+        Påfyldning påfyldning = new Påfyldning(dato, ansvarlig, fad);
         for(VæskeMængde vm : væskeMængder){
             påfyldning.createVæskeMængde(vm.getMængde(), vm.getDestillat());
             vm.getDestillat().reducerAktuelMængdeVæske(vm.getMængde());

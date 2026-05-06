@@ -11,6 +11,7 @@ public class Fad implements Serializable {
     private Alkoholtype tidligereAlkoholindhold;
     private double størrelse;
     private final ArrayList<Påfyldning> påfyldninger = new ArrayList<>();
+    private boolean erAktiv;
     //private Lokation lokation
 
     public Fad(int nummer, String leverandør, String land, int antalBrug, Alkoholtype tidligereAlkoholindhold, double størrelse){
@@ -22,7 +23,7 @@ public class Fad implements Serializable {
         this.størrelse = størrelse;
         //this.loktaion = lokation;
         //Husk at tilføje lokation
-
+        this.erAktiv = false;
     }
 
     //Alle get metoder
@@ -47,6 +48,10 @@ public class Fad implements Serializable {
     }
 
     public double getStørrelse() { return størrelse;}
+
+    public boolean isErAktiv() {
+        return erAktiv;
+    }
 
     //    public Lokation getLokation(){
 //        return lokation;
