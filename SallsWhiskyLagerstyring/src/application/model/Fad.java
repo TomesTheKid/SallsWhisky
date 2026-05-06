@@ -14,6 +14,10 @@ public class Fad implements Serializable {
     private boolean erAktiv;
     //private Lokation lokation
 
+    /**
+     * Opretter Fad
+     * Pre: nummer, leverandør, land, antalBrug, tidligereAlkoholindhold, størrelse != null
+     */
     public Fad(int nummer, String leverandør, String land, int antalBrug, Alkoholtype tidligereAlkoholindhold, double størrelse){
         this.nummer = nummer;
         this.leverandør = leverandør;
@@ -72,6 +76,10 @@ public class Fad implements Serializable {
         påfyldninger.remove(påfyldning);
     }
     //-----------------------------------
+
+    /**
+     * Tæller fadet antalBrug op med 1
+     */
     public void optælAntalBrug(){
         antalBrug++;
     }

@@ -10,6 +10,10 @@ public class Påfyldning implements Serializable {
     private Fad fad;
     private ArrayList<VæskeMængde> væskeMængder = new ArrayList<>();
 
+    /**
+     * Opretter Påfyldning og tæller fadet antalBrug op med 1
+     * Pre: dato, ansvarlig, fad != null
+     */
     public Påfyldning(LocalDate dato, String ansvarlig, Fad fad){
         this.dato = dato;
         this.ansvarlig = ansvarlig;
@@ -50,12 +54,22 @@ public class Påfyldning implements Serializable {
     }
 
     //-----------------------------------------------
+
+    /**
+     * Opretter VæskeMængde objekt og tilføjer det til Påfyldnings objektets Liste over væskemængder
+     * Pre: mængde, destillat != null
+     * @return objekt af væskemængde
+     */
     public VæskeMængde createVæskeMængde(double mængde, Destillat destillat){
         VæskeMængde væskeMængde = new VæskeMængde(mængde, destillat);
         væskeMængder.add(væskeMængde);
         return væskeMængde;
     }
 
+    /**
+     * Regner samlet mængde ud for påfyldnings væskeObjekter
+     * @return sum af alle væskemængder
+     */
     public double getSamletPåfyldtMængde(){
         double sum = 0;
         for (VæskeMængde v : væskeMængder){

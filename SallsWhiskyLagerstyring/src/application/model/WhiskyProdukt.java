@@ -11,7 +11,10 @@ public class WhiskyProdukt {
     private int nummer;
     private int årstal;
 
-
+    /**
+     * Opretter WhiskyProdukt
+     * Pre: batchID, kvalitetsstempel, alkoholprocent, størrelse, vandkilde, nummer, årstal != null
+     */
     public WhiskyProdukt(int batchID, double vandMængde, String kvalitetsstempel, double alkoholprocent,
                          double størrelse, String vandkilde, String beskrivelse, int nummer, int årstal) {
         this.batchID = batchID;

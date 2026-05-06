@@ -20,12 +20,14 @@ public class Controller {
     //-----------------------------------
 
     //CreateMetoder
-    /*
-     Kommentar må gerne være null
-     aktuelMængdeVæske må gerne være null
+    /**
+     * Hvis startDato er efter slutDato kastes en IllegalArgumentException og
+     * destillat oprettes ikke
+     * Tilføjer objektet til storage
+     * Pre: startDato, slutDato, maltbatch, kornsort, mængdeVæske != null
+     * Pre: alkoholprocent, rygemateriale, newMakeNr, ID != null
+     * @return destilat objekt
      */
-    //TODO
-    //Sikre at slutdato ikke er før startdato
     public static Destillat createDestillat(LocalDate startDato,
                                             LocalDate slutDato,
                                             String maltbatch,
@@ -37,6 +39,10 @@ public class Controller {
                                             int newMakeNr,
                                             int ID,
                                             double aktuelMængdeVæske){
+        if (slutDato.isBefore(startDato)){
+            throw new IllegalArgumentException("Slutdato er før startdato");
+        }
+
         Destillat destillat = new Destillat(
                 startDato,
                 slutDato,
@@ -53,6 +59,11 @@ public class Controller {
         return destillat;
     }
 
+    /**
+     * Pre: nummer, leverandør, land, antalBrug, tidligereAlkoholindhold, størrelse != null
+     * Tilføjer objketet til storage
+     * @return fad objekt
+     */
     public static Fad createFad(int nummer,
                                 String leverandør,
                                 String land,
@@ -64,7 +75,11 @@ public class Controller {
         return fad;
     }
 
-
+    /**
+     * Hvis Listen med væskemængders totalmængde > fadet størrelse kastes en IllegalArgumentException
+     * Pre: dato, ansvarlig, fad, væskeMængder != null
+     * @return påfyldnings objekt
+     */
     public static Påfyldning createPåfyldning(LocalDate dato,
                                               String ansvarlig,
                                               Fad fad,
@@ -74,6 +89,14 @@ public class Controller {
         }
         if (væskeMængder == null || væskeMængder.isEmpty()) {
             throw new IllegalArgumentException("Ingen væske angivet");
+        }
+
+        double totalMængde = 0;
+        for (VæskeMængde vm : væskeMængder){
+            totalMængde += vm.getMængde();
+        }
+        if (totalMængde > fad.getStørrelse()){
+            throw new IllegalArgumentException("Der er ikke plads på faldet");
         }
 
         Påfyldning påfyldning = new Påfyldning(dato, ansvarlig, fad);
@@ -87,7 +110,6 @@ public class Controller {
     }
 
     // Get metode
-
     public static List<Destillat> getDestillater() {
         return new ArrayList<>(storage.getDestillater());
     }
