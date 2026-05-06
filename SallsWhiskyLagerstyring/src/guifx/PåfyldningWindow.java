@@ -34,7 +34,7 @@ public class PåfyldningWindow extends Stage {
 
     private DatePicker dpDato;
     private TextField txfAnsvarlig;
-    private TextField txfFillNr;
+//    private TextField txfFillNr;
     private Label lblError;
 
     public PåfyldningWindow(Stage owner, Fad valgtFad) {
@@ -65,12 +65,12 @@ public class PåfyldningWindow extends Stage {
 
         dpDato = new DatePicker(LocalDate.now());
         txfAnsvarlig = new TextField();
-        txfFillNr = new TextField();
+//        txfFillNr = new TextField();
         lblError = new Label();
 
         txfLiter.setPromptText("fx 50");
         txfAnsvarlig.setPromptText("fx Malthe");
-        txfFillNr.setPromptText("fx 1");
+//        txfFillNr.setPromptText("fx 1");
 
         if (valgtFad != null) {
             cbFad.getSelectionModel().select(valgtFad);
@@ -99,8 +99,8 @@ public class PåfyldningWindow extends Stage {
         pane.add(new Label("Påfyldt af"), 0, 6);
         pane.add(txfAnsvarlig, 1, 6, 3, 1);
 
-        pane.add(new Label("Fill nr"), 0, 7);
-        pane.add(txfFillNr, 1, 7, 3, 1);
+//        pane.add(new Label("Fill nr"), 0, 7);
+//        pane.add(txfFillNr, 1, 7, 3, 1);
 
         Button btnCancel = new Button("Annuller");
         pane.add(btnCancel, 0, 8);
@@ -164,14 +164,6 @@ public class PåfyldningWindow extends Stage {
         String ansvarlig = txfAnsvarlig.getText().trim();
         if (ansvarlig.isEmpty()) {
             lblError.setText("Påfyldt af mangler.");
-            return;
-        }
-
-        int fillNr;
-        try {
-            fillNr = Integer.parseInt(txfFillNr.getText().trim());
-        } catch (NumberFormatException ex) {
-            lblError.setText("Fill nr skal være et tal.");
             return;
         }
 

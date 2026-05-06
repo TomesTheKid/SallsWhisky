@@ -6,6 +6,10 @@ public class VæskeMængde implements Serializable {
     private double mængde;
     private Destillat destillat;
 
+    /**
+     * Opretter VæskeMængde
+     * Pre: mængde, destillat != null
+     */
     public VæskeMængde(double mængde, Destillat destillat) {
         this.mængde = mængde;
         this.destillat = destillat;
