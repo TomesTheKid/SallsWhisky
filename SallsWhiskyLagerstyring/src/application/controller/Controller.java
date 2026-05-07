@@ -84,15 +84,16 @@ public class Controller {
                                               String ansvarlig,
                                               Fad fad,
                                               List<Double> mængder, List<Destillat> destillater) {
-        if (fad == null) {
-            throw new IllegalArgumentException("Fad mangler");
-        }
-        if (mængder == null || mængder.isEmpty()) {
-            throw new IllegalArgumentException("Ingen væske angivet");
+
+        if (mængder.size() != destillater.size()) {
+            throw new IllegalArgumentException("Mængder og destillater matcher ikke");
         }
 
         double totalMængde = 0;
         for (Double m : mængder){
+            if (m == null || m <= 0) {
+                throw new IllegalArgumentException("Mængde skal være > 0");
+            }
             totalMængde += m;
         }
         if (totalMængde > fad.getStørrelse()){

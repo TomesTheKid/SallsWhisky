@@ -161,6 +161,14 @@ public class PåfyldningWindow extends Stage {
             lblError.setText("Tilføj mindst et destillat.");
             return;
         }
+        if (destillatValgList.isEmpty()) {
+            lblError.setText("Tilføj mindst et destillat.");
+            return;
+        }
+        if (mængdeList.size() != destillatValgList.size()) {
+            lblError.setText("Mængder og destillater matcher ikke.");
+            return;
+        }
         if (dpDato.getValue() == null) {
             lblError.setText("Vælg en dato.");
             return;
@@ -171,13 +179,17 @@ public class PåfyldningWindow extends Stage {
             return;
         }
 
-        Controller.createPåfyldning(
-                dpDato.getValue(),
-                ansvarlig,
-                fad,
-                new ArrayList<>(mængdeList),
-                new ArrayList<>(destillatValgList)
-        );
-        hide();
+        try {
+            Controller.createPåfyldning(
+                    dpDato.getValue(),
+                    ansvarlig,
+                    fad,
+                    new ArrayList<>(mængdeList),
+                    new ArrayList<>(destillatValgList)
+            );
+            hide();
+        } catch (IllegalArgumentException ex) {
+            lblError.setText(ex.getMessage());
+        }
     }
 }
