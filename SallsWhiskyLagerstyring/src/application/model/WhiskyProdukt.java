@@ -1,5 +1,7 @@
 package application.model;
 
+import java.util.ArrayList;
+
 public class WhiskyProdukt {
     private int batchID;
     private double vandMængde;
@@ -10,6 +12,7 @@ public class WhiskyProdukt {
     private String beskrivelse;
     private int nummer;
     private int årstal;
+    private final ArrayList<Fadbidrag> fadbidrags = new ArrayList<>();
 
     /**
      * Opretter WhiskyProdukt
@@ -65,5 +68,23 @@ public class WhiskyProdukt {
         return årstal;
     }
     //--------------------------------------
+    //Link til Fadbidrag
 
+    public ArrayList<Fadbidrag> getFadbidrags() {
+        return new ArrayList<>(fadbidrags);
+    }
+
+    public void addFadbidragTilWP(Fadbidrag fadbidrag){
+        if (!fadbidrags.contains(fadbidrag)){
+            fadbidrags.add(fadbidrag);
+            fadbidrag.setWhiskyProdukt(this);
+        }
+    }
+
+    public void removeFadbidragFraWP(Fadbidrag fadbidrag){
+        if (fadbidrags.contains(fadbidrag)){
+            fadbidrags.remove(fadbidrag);
+            fadbidrag.setWhiskyProdukt(null);
+        }
+    }
 }
