@@ -12,7 +12,7 @@ public class StartWindow extends Application {
     private DestilleringPane destilleringPane;
     private Pane lagerPane;
     private FadPane fadPane;
-    private Pane whiskyPane;
+    private WhiskyPane whiskyPane;
 
     @Override
     public void start(Stage stage) {
@@ -20,7 +20,7 @@ public class StartWindow extends Application {
         this.lagerPane = new Pane();
         this.destilleringPane = new DestilleringPane(stage);
         this.fadPane = new FadPane(stage);
-        this.whiskyPane = new Pane();
+        this.whiskyPane = new WhiskyPane(stage);
         initContent();
         stage.show();
     }

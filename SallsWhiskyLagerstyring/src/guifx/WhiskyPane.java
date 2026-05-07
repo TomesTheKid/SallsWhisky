@@ -75,6 +75,6 @@ public class WhiskyPane extends GridPane {
     }
 
     private void openWhiskyWindow() {
-        // Placeholder for later when WhiskyProdukt and Fadbidrag are implemented.
+        // Pladsholder til senere når WhiekyProdukt og Fadbirdrag bliver implementeret
     }
 }

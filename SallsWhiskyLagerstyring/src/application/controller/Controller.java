@@ -100,11 +100,11 @@ public class Controller {
         }
 
         Påfyldning påfyldning = new Påfyldning(dato, ansvarlig, fad);
-        for(double m : mængder){
-            for (Destillat d : destillater) {
-                påfyldning.createVæskeMængde(m, d);
-                d.reducerAktuelMængdeVæske(m);
-            }
+        for (int i = 0; i < mængder.size(); i++) {
+            double m = mængder.get(i);
+            Destillat d = destillater.get(i);
+            påfyldning.createVæskeMængde(m, d);
+            d.reducerAktuelMængdeVæske(m);
         }
 
         fad.addPåfyldning(påfyldning);
