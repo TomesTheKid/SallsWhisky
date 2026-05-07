@@ -83,26 +83,28 @@ public class Controller {
     public static Påfyldning createPåfyldning(LocalDate dato,
                                               String ansvarlig,
                                               Fad fad,
-                                              List<Double> mængder, List<Destillat> destillats) {
+                                              List<Double> mængder, List<Destillat> destillater) {
         if (fad == null) {
             throw new IllegalArgumentException("Fad mangler");
         }
-        if (væskeMængder == null || væskeMængder.isEmpty()) {
+        if (mængder == null || mængder.isEmpty()) {
             throw new IllegalArgumentException("Ingen væske angivet");
         }
 
         double totalMængde = 0;
-        for (VæskeMængde vm : væskeMængder){
-            totalMængde += vm.getMængde();
+        for (Double m : mængder){
+            totalMængde += m;
         }
         if (totalMængde > fad.getStørrelse()){
             throw new IllegalArgumentException("Der er ikke plads på faldet");
         }
 
         Påfyldning påfyldning = new Påfyldning(dato, ansvarlig, fad);
-        for(VæskeMængde vm : væskeMængder){
-            påfyldning.createVæskeMængde(vm.getMængde(), vm.getDestillat());
-            vm.getDestillat().reducerAktuelMængdeVæske(vm.getMængde());
+        for(double m : mængder){
+            for (Destillat d : destillater) {
+                påfyldning.createVæskeMængde(m, d);
+                d.reducerAktuelMængdeVæske(m);
+            }
         }
 
         fad.addPåfyldning(påfyldning);

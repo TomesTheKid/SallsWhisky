@@ -8,7 +8,7 @@ public class Påfyldning implements Serializable {
     private LocalDate dato;
     private String ansvarlig;
     private Fad fad;
-    private ArrayList<VæskeMængde> væskeMængder = new ArrayList<>();
+    private ArrayList<VæskeMængde> væskeMængder;
     private final ArrayList<Fadbidrag> fadbidrags = new ArrayList<>();
 
     /**
@@ -19,6 +19,7 @@ public class Påfyldning implements Serializable {
         this.dato = dato;
         this.ansvarlig = ansvarlig;
         this.fad = fad;
+        this.væskeMængder = new ArrayList<>();
         fad.optælAntalBrug();
     }
 
