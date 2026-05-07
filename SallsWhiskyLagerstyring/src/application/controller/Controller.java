@@ -78,6 +78,7 @@ public class Controller {
     /**
      * Hvis Listen med væskemængders totalmængde > fadet størrelse kastes en IllegalArgumentException
      * Pre: dato, ansvarlig, fad, væskeMængder != null
+     * Pre: List med mængder og List med destillater skal være lige store
      * @return påfyldnings objekt
      */
     public static Påfyldning createPåfyldning(LocalDate dato,
