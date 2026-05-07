@@ -8,7 +8,8 @@ public class Påfyldning implements Serializable {
     private LocalDate dato;
     private String ansvarlig;
     private Fad fad;
-    private ArrayList<VæskeMængde> væskeMængder = new ArrayList<>();
+    private ArrayList<VæskeMængde> væskeMængder;
+    private final ArrayList<Fadbidrag> fadbidrags = new ArrayList<>();
 
     /**
      * Opretter Påfyldning og tæller fadet antalBrug op med 1
@@ -18,6 +19,7 @@ public class Påfyldning implements Serializable {
         this.dato = dato;
         this.ansvarlig = ansvarlig;
         this.fad = fad;
+        this.væskeMængder = new ArrayList<>();
         fad.optælAntalBrug();
     }
 
@@ -54,7 +56,25 @@ public class Påfyldning implements Serializable {
     }
 
     //-----------------------------------------------
+    //Link til Fadbidrag
+    public ArrayList<Fadbidrag> getFadbidrags() {
+        return new ArrayList<>(fadbidrags);
+    }
 
+    public void addFadbidragTilP(Fadbidrag fadbidrag){
+        if (!fadbidrags.contains(fadbidrag)){
+            fadbidrags.add(fadbidrag);
+            fadbidrag.setPåfyldning(this);
+        }
+    }
+
+    public void removeFadbidragFraP(Fadbidrag fadbidrag){
+        if (fadbidrags.contains(fadbidrag)){
+            fadbidrags.remove(fadbidrag);
+            fadbidrag.setPåfyldning(null);
+        }
+    }
+    //-----------------------------------------------
     /**
      * Opretter VæskeMængde objekt og tilføjer det til Påfyldnings objektets Liste over væskemængder
      * Pre: mængde, destillat != null
@@ -78,6 +98,7 @@ public class Påfyldning implements Serializable {
         return sum;
     }
 
+    //----------------------------------------------------
     @Override
     public String toString() {
         return "Dato=" + dato + ", ansvarlig=" + ansvarlig + ", væsker=" + væskeMængder;

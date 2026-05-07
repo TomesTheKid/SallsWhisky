@@ -3,7 +3,6 @@ package guifx;
 import application.controller.Controller;
 import application.model.Destillat;
 import application.model.Fad;
-import application.model.VæskeMængde;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
@@ -21,20 +20,23 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class PåfyldningWindow extends Stage {
     private final ObservableList<Fad> fadList = FXCollections.observableArrayList();
     private final ObservableList<Destillat> destillatList = FXCollections.observableArrayList();
-    private final ObservableList<VæskeMængde> væskeList = FXCollections.observableArrayList();
+    private final ObservableList<Double> mængdeList = FXCollections.observableArrayList();
+    private final ObservableList<Destillat> destillatValgList = FXCollections.observableArrayList();
+    private final ObservableList<String> væskeVisningList = FXCollections.observableArrayList();
 
     private ComboBox<Fad> cbFad;
     private ComboBox<Destillat> cbDestillat;
     private TextField txfLiter;
-    private ListView<VæskeMængde> lvwVæske;
+    private ListView<String> lvwVæske;
 
     private DatePicker dpDato;
     private TextField txfAnsvarlig;
-//    private TextField txfFillNr;
+    //    private TextField txfFillNr;
     private Label lblError;
 
     public PåfyldningWindow(Stage owner, Fad valgtFad) {
@@ -61,7 +63,7 @@ public class PåfyldningWindow extends Stage {
         cbFad = new ComboBox<>(fadList);
         cbDestillat = new ComboBox<>(destillatList);
         txfLiter = new TextField();
-        lvwVæske = new ListView<>(væskeList);
+        lvwVæske = new ListView<>(væskeVisningList);
 
         dpDato = new DatePicker(LocalDate.now());
         txfAnsvarlig = new TextField();
@@ -135,9 +137,11 @@ public class PåfyldningWindow extends Stage {
             return;
         }
 
-        væskeList.add(new VæskeMængde(liter, destillat));
+        mængdeList.add(liter);
+        destillatValgList.add(destillat);
+        væskeVisningList.add(String.format("%.1f L af %s", liter, destillat));
         txfLiter.clear();
-        if (væskeList.size() == 1) {
+        if (mængdeList.size() == 1) {
             cbFad.setDisable(true);
         }
     }
@@ -153,7 +157,7 @@ public class PåfyldningWindow extends Stage {
             lblError.setText("Vælg et fad.");
             return;
         }
-        if (væskeList.isEmpty()) {
+        if (mængdeList.isEmpty()) {
             lblError.setText("Tilføj mindst et destillat.");
             return;
         }
@@ -171,7 +175,8 @@ public class PåfyldningWindow extends Stage {
                 dpDato.getValue(),
                 ansvarlig,
                 fad,
-                væskeList
+                new ArrayList<>(mængdeList),
+                new ArrayList<>(destillatValgList)
         );
         hide();
     }
