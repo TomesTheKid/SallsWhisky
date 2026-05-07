@@ -83,7 +83,7 @@ public class Controller {
     public static Påfyldning createPåfyldning(LocalDate dato,
                                               String ansvarlig,
                                               Fad fad,
-                                              List<VæskeMængde> væskeMængder) {
+                                              List<Double> mængder, List<Destillat> destillats) {
         if (fad == null) {
             throw new IllegalArgumentException("Fad mangler");
         }
