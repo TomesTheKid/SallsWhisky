@@ -1,6 +1,7 @@
 package application.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Fad implements Serializable {
     private int nummer;
@@ -9,8 +10,14 @@ public class Fad implements Serializable {
     private int antalBrug;
     private Alkoholtype tidligereAlkoholindhold;
     private double størrelse;
+    private final ArrayList<Påfyldning> påfyldninger = new ArrayList<>();
+    private boolean erAktiv;
     //private Lokation lokation
 
+    /**
+     * Opretter Fad
+     * Pre: nummer, leverandør, land, antalBrug, tidligereAlkoholindhold, størrelse != null
+     */
     public Fad(int nummer, String leverandør, String land, int antalBrug, Alkoholtype tidligereAlkoholindhold, double størrelse){
         this.nummer = nummer;
         this.leverandør = leverandør;
@@ -20,6 +27,7 @@ public class Fad implements Serializable {
         this.størrelse = størrelse;
         //this.loktaion = lokation;
         //Husk at tilføje lokation
+        this.erAktiv = false;
     }
 
     //Alle get metoder
@@ -45,10 +53,37 @@ public class Fad implements Serializable {
 
     public double getStørrelse() { return størrelse;}
 
+    public boolean isErAktiv() {
+        return erAktiv;
+    }
+
     //    public Lokation getLokation(){
 //        return lokation;
 //    }
     //------------------------------------------------------------------------------------
+    //Link til Påfyldning-Klasse
+    public ArrayList<Påfyldning> getPåfyldninger() {
+        return new ArrayList<>(påfyldninger);
+    }
+
+    public void addPåfyldning(Påfyldning påfyldning){
+        if (påfyldning != null && !påfyldninger.contains(påfyldning)){
+            påfyldninger.add(påfyldning);
+        }
+    }
+
+    public void removePåfyldning(Påfyldning påfyldning){
+        påfyldninger.remove(påfyldning);
+    }
+    //-----------------------------------
+
+    /**
+     * Tæller fadet antalBrug op med 1
+     */
+    public void optælAntalBrug(){
+        antalBrug++;
+    }
+    //-----------------------------
 
     //TODO
     //public void flytFad(Lokation lokation){
@@ -57,9 +92,6 @@ public class Fad implements Serializable {
 
     @Override
     public String toString() {
-        return "Fad{" +
-                "nummer=" + nummer +
-                ", tidligereAlkoholindhold='" + tidligereAlkoholindhold + '\'' +
-                '}';
+        return "Fad " + nummer + " " + tidligereAlkoholindhold +" størrelse: "+ størrelse;
     }
 }

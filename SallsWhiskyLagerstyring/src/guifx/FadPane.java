@@ -2,6 +2,7 @@ package guifx;
 
 import application.controller.Controller;
 import application.model.Fad;
+import application.model.Påfyldning;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -19,7 +20,6 @@ public class FadPane extends GridPane {
     private final ObservableList<Fad> fadList = FXCollections.observableArrayList();
     private final ListView<Fad> lvwFade = new ListView<>(fadList);
     private final TextArea txaFadDetaljer = new TextArea();
-
 
     public FadPane(Stage owner) {
         this.owner = owner;
@@ -44,12 +44,14 @@ public class FadPane extends GridPane {
         txaFadDetaljer.setEditable(false);
 
         Button btnOpretFad = new Button("Opret fad");
+        Button btnPaafylning = new Button("Registrer påfyldning");
         HBox hbxButtons = new HBox(40);
         add(hbxButtons, 0, 3, 2, 1);
         hbxButtons.setPadding(new Insets(10, 0, 0, 0));
         hbxButtons.setAlignment(Pos.BASELINE_CENTER);
-        hbxButtons.getChildren().add(btnOpretFad);
+        hbxButtons.getChildren().addAll(btnOpretFad, btnPaafylning);
         btnOpretFad.setOnAction(e -> openFadWindow());
+        btnPaafylning.setOnAction(e -> openPåfyldningWindow());
 
         lvwFade.getSelectionModel().selectedItemProperty()
                 .addListener((obs, oldV, newV) -> selectedFadChanged());
@@ -70,14 +72,19 @@ public class FadPane extends GridPane {
             txaFadDetaljer.clear();
             return;
         }
-        String text = "Nr: " + fad.getNummer()
-                + "\nLeverandør: " + (fad.getLeverandør() == null || fad.getLeverandør().isBlank() ? "-" : fad.getLeverandør())
-                + "\nLand: " + (fad.getLand() == null || fad.getLand().isBlank() ? "-" : fad.getLand())
-                + "\nAntal brug: " + fad.getAntalBrug()
-                + "\nTidligere alkoholindhold: "
-                + (fad.getTidligereAlkoholindhold() == null ? "-" : fad.getTidligereAlkoholindhold().name())
-                + "\nStørrelse: " + String.format("%.1f", fad.getStørrelse()) + " L";
-        txaFadDetaljer.setText(text);
+        StringBuilder sb = new StringBuilder();
+        sb.append("Nr: ").append(fad.getNummer())
+                .append("\nLeverandør: ").append(fad.getLeverandør() == null || fad.getLeverandør().isBlank() ? "-" : fad.getLeverandør())
+                .append("\nLand: ").append(fad.getLand() == null || fad.getLand().isBlank() ? "-" : fad.getLand())
+                .append("\nAntal brug: ").append(fad.getAntalBrug())
+                .append("\nTidligere alkoholindhold: ")
+                .append(fad.getTidligereAlkoholindhold() == null ? "-" : fad.getTidligereAlkoholindhold().name())
+                .append("\nStørrelse: ").append(String.format("%.1f", fad.getStørrelse())).append(" L")
+                .append("\n\nPåfyldninger:");
+        for (Påfyldning p : fad.getPåfyldninger()) {
+            sb.append("\n- ").append(p);
+        }
+        txaFadDetaljer.setText(sb.toString());
     }
 
     private void selectedFadChanged() {
@@ -97,4 +104,11 @@ public class FadPane extends GridPane {
             lvwFade.getSelectionModel().select(fadList.size() - 1);
         }
     }
+
+    private void openPåfyldningWindow() {
+        PåfyldningWindow window = new PåfyldningWindow(owner, lvwFade.getSelectionModel().getSelectedItem());
+        window.showAndWait();
+        refresh();
+    }
+
 }

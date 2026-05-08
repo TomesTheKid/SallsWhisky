@@ -16,7 +16,10 @@ public class Destillat implements Serializable {
     private int ID;
     private double aktuelMængdeVæske;
 
-
+    /**
+     * Opretter Destillat objekt
+     * Pre: startDato, slutDato, maltbatch, kornsort, mængdeVæske, alkoholprocent, newMakeNr, ID != null
+     */
     public Destillat(LocalDate startDato, LocalDate slutDato, String maltbatch, Kornsort kornsort,
                      double mængdeVæske, double alkoholprocent, String rygemateriale, String kommentar,
                      int newMakeNr, int ID, double aktuelMængdeVæske) {
@@ -79,15 +82,30 @@ public class Destillat implements Serializable {
     }
     //----------------------------------------------------------------
 
+    /**
+     * Sætter Destillatets slutdato til dagens dato
+     */
     public void afslutDestillering(){
         this.slutDato = LocalDate.now();
     }
 
+    /**
+     * Reducere destillates aktuelMængdeVæske, hvis mængden > aktuelMængdeVæske
+     * kastes en IllegalArgumentException og der bliver ikke reduceret
+     * Pre: mængde != null
+     */
+    public void reducerAktuelMængdeVæske(double mængde){
+        if(mængde < 0){
+            return;
+        }
+        if(mængde > aktuelMængdeVæske){
+            throw new IllegalArgumentException("Ikke nok destillat tilbage");
+        }
+        aktuelMængdeVæske -= mængde;
+    }
+
     @Override
     public String toString() {
-        return "Destillat{" +
-                "ID=" + ID +
-                ", aktuelMængdeVæske=" + aktuelMængdeVæske +
-                '}';
+        return "Destillat med id: " + ID + " med: " + aktuelMængdeVæske + " L";
     }
 }
