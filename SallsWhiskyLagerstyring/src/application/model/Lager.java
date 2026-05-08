@@ -24,8 +24,8 @@ public class Lager {
         return adresse;
     }
 
-    public LagerPlacering createLagerPlacering(String placeringPaaLageret, Lager lager, Fad fad) {
-        LagerPlacering lagerPlacering = new LagerPlacering(placeringPaaLageret, lager, fad);
+    public LagerPlacering createLagerPlacering(int reol, int række, int hylde, Lager lager, Fad fad) {
+        LagerPlacering lagerPlacering = new LagerPlacering(reol, række, hylde, lager, fad);
         lokationer.add(lagerPlacering);
         return lagerPlacering;
     }
