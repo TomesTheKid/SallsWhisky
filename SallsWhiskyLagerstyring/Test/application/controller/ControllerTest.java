@@ -1,7 +1,6 @@
 package application.controller;
 
-import application.model.Destillat;
-import application.model.Kornsort;
+import application.model.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import storage.StorageFile;
@@ -9,6 +8,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 class ControllerTest {
     private LocalDate startDato;
@@ -23,6 +24,11 @@ class ControllerTest {
     private int ID;
     private double aktuelMængdeVæske;
     private Destillat testDestillat;
+    private String ansvarlig;
+    private Fad fad;
+    private Destillat d1;
+    private Destillat d2;
+
 
     @BeforeEach
     void setUp(){
@@ -38,6 +44,11 @@ class ControllerTest {
         newMakeNr = 1;
         ID = 1;
         aktuelMængdeVæske = mængdeVæske;
+        ansvarlig = "Bo";
+        fad = new Fad(3, "Karl", "Spanien", 1, Alkoholtype.RØDVIN, 200);
+        d1 = new Destillat(startDato, slutDato, maltbatch, Kornsort.IRINA, mængdeVæske, alkoholprocent, rygemateriale, null, 1, 101, aktuelMængdeVæske);
+        d2 = new Destillat(startDato, slutDato, maltbatch, Kornsort.EVERGREEN, mængdeVæske, alkoholprocent, rygemateriale, null, 2, 102, aktuelMængdeVæske);
+
     }
 
     @Test
@@ -61,5 +72,25 @@ class ControllerTest {
 
         assertEquals(1, Controller.getStorage().getDestillater().size());
         assertTrue(Controller.getStorage().getDestillater().contains(testDestillat));
+    }
+
+    @Test
+    void createPåfyldning(){
+        //TC1
+        List<Double> mængder = new ArrayList<>();
+        mængder.add(50.0);
+        mængder.add(100.0);
+
+        List<Destillat> destillater = new ArrayList<>();
+        destillater.add(d1);
+        destillater.add(d2);
+
+        Påfyldning testPåfyldning = Controller.createPåfyldning(startDato, ansvarlig, fad, mængder, destillater);
+
+        assertEquals(startDato, testPåfyldning.getDato());
+        assertEquals(ansvarlig, testPåfyldning.getAnsvarlig());
+        assertEquals(fad, testPåfyldning.getFad());
+        assertEquals();
+
     }
 }
