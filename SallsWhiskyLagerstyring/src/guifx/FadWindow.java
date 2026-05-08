@@ -2,10 +2,12 @@ package guifx;
 
 import application.controller.Controller;
 import application.model.Alkoholtype;
+import javafx.collections.FXCollections;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
@@ -18,7 +20,7 @@ public class FadWindow extends Stage {
     private TextField txfLeverandør;
     private TextField txfLand;
     private TextField txfAntalBrug;
-    private TextField txfTidligereAlkoholindhold;
+    private ComboBox<Alkoholtype> cbAlkoholtype;
     private TextField txfStorrelse;
     private Label lblError;
 
@@ -44,14 +46,14 @@ public class FadWindow extends Stage {
         txfLeverandør = new TextField();
         txfLand = new TextField();
         txfAntalBrug = new TextField();
-        txfTidligereAlkoholindhold = new TextField();
+        cbAlkoholtype = new ComboBox<>(FXCollections.observableArrayList(Alkoholtype.values()));
         txfStorrelse = new TextField();
 
         txfNummer.setPromptText("fx 1");
         txfLeverandør.setPromptText("fx Islay");
         txfLand.setPromptText("fx Skotland");
         txfAntalBrug.setPromptText("fx 2");
-        txfTidligereAlkoholindhold.setPromptText("fx sherry");
+        cbAlkoholtype.setPromptText("Vælg type");
         txfStorrelse.setPromptText("fx 200");
 
         pane.add(new Label("Nummer"), 0, 0);
@@ -67,7 +69,7 @@ public class FadWindow extends Stage {
         pane.add(txfAntalBrug, 0, 7);
 
         pane.add(new Label("Tidligere alkoholindhold"), 0, 8);
-        pane.add(txfTidligereAlkoholindhold, 0, 9);
+        pane.add(cbAlkoholtype, 0, 9);
 
         pane.add(new Label("Størrelse (L)"), 0, 10);
         pane.add(txfStorrelse, 0, 11);
@@ -92,27 +94,34 @@ public class FadWindow extends Stage {
     }
 
     private void okAction() {
+        lblError.setText("");
+
+        // Tomme felter fanges i GUI
+        if (txfNummer.getText().trim().isEmpty()) { lblError.setText("Nummer mangler."); return; }
+        if (txfLeverandør.getText().trim().isEmpty()) { lblError.setText("Leverandør mangler."); return; }
+        if (txfLand.getText().trim().isEmpty()) { lblError.setText("Land mangler."); return; }
+        if (txfAntalBrug.getText().trim().isEmpty()) { lblError.setText("Antal brug mangler."); return; }
+        if (cbAlkoholtype.getValue() == null) { lblError.setText("Vælg tidligere alkoholindhold."); return; }
+        if (txfStorrelse.getText().trim().isEmpty()) { lblError.setText("Størrelse mangler."); return; }
+
         try {
-            String nummerText = txfNummer.getText().trim();
-            if (nummerText.isEmpty()) {
-                lblError.setText("Nummer mangler.");
-                return;
-            }
-            int nummer = Integer.parseInt(nummerText);
+            int nummer = Integer.parseInt(txfNummer.getText().trim());
             int antalBrug = Integer.parseInt(txfAntalBrug.getText().trim());
             double storrelse = Double.parseDouble(txfStorrelse.getText().trim());
-            Alkoholtype alkoholtype = Alkoholtype.valueOf(txfTidligereAlkoholindhold.getText().trim().toUpperCase());
+
             Controller.createFad(
                     nummer,
                     txfLeverandør.getText().trim(),
                     txfLand.getText().trim(),
                     antalBrug,
-                    alkoholtype,
+                    cbAlkoholtype.getValue(),
                     storrelse
             );
             hide();
-        } catch (Exception ex) {
-            lblError.setText("Ugyldig input. Kontrollér talfelter.");
+        } catch (NumberFormatException ex) {
+            lblError.setText("Talfelter skal udfyldes med gyldige tal.");
+        } catch (IllegalArgumentException ex) {
+            lblError.setText(ex.getMessage());
         }
     }
 }
