@@ -1,8 +1,9 @@
 package application.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class WhiskyProdukt {
+public class WhiskyProdukt implements Serializable {
     private int batchID;
     private double vandMængde;
     private String kvalitetsstempel;
