@@ -92,9 +92,6 @@ public class Fad implements Serializable {
 
     @Override
     public String toString() {
-        return "Fad{" +
-                "nummer=" + nummer +
-                ", tidligereAlkoholindhold='" + tidligereAlkoholindhold + '\'' +
-                '}';
+        return "Fad " + nummer + " " + tidligereAlkoholindhold +" størrelse: "+ størrelse;
     }
 }

@@ -1,6 +1,8 @@
 package application.model;
 
-public class Fadbidrag {
+import java.io.Serializable;
+
+public class Fadbidrag implements Serializable {
     private double mængdeLiter;
     private Påfyldning påfyldning;
     private WhiskyProdukt whiskyProdukt;
@@ -55,4 +57,9 @@ public class Fadbidrag {
     }
     //---------------------------------------------------
 
+
+    @Override
+    public String toString() {
+        return "Fadbidrag med: " + mængdeLiter + 'L';
+    }
 }
