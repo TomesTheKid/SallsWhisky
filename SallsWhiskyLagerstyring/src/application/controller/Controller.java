@@ -3,6 +3,7 @@ package application.controller;
 import application.model.*;
 import storage.StorageFile;
 
+import java.io.BufferedWriter;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -113,10 +114,61 @@ public class Controller {
         return påfyldning;
     }
 
+    // --- WhiskyProdukt ---
+    /**
+     * Opretter et WhiskyProdukt. For hvert par (påfyldning, mængde) oprettes et Fadbidrag,
+     * som via sine set-metoder kobler sig selv til både Påfyldning og WhiskyProdukt.
+     * Pre: påfyldninger og mængder har samme størrelse og er ikke tomme
+     */
+    public static WhiskyProdukt createWhiskyProdukt(int batchID,
+                                                    double vandMængde,
+                                                    String kvalitetsstempel,
+                                                    double alkoholprocent,
+                                                    double størrelse,
+                                                    String vandkilde,
+                                                    String beskrivelse,
+                                                    int nummer,
+                                                    int årstal,
+                                                    List<Påfyldning> påfyldninger,
+                                                    List<Double> mængder) {
+        if (påfyldninger == null || mængder == null
+                || påfyldninger.size() != mængder.size()
+                || påfyldninger.isEmpty()) {
+            throw new IllegalArgumentException("Påfyldninger og mængder skal matche og ikke være tomme");
+        }
+        WhiskyProdukt wp = new WhiskyProdukt(batchID, vandMængde, kvalitetsstempel, alkoholprocent,
+                størrelse, vandkilde, beskrivelse, nummer, årstal);
+
+        for (int i = 0; i < påfyldninger.size(); i++) {
+            Fadbidrag fb = new Fadbidrag(mængder.get(i));
+            fb.setPåfyldning(påfyldninger.get(i));
+            fb.setWhiskyProdukt(wp);
+        }
+
+        storage.addWhiskyProdukt(wp);
+        return wp;
+    }
+
+    /**
+     * Genererer en historisk rapport for et WhiskyProdukt og skriver den måske til en fil.
+     * Pre: wp != null
+     */
+    // TODO
+    public static void gemHistoriskRapport(WhiskyProdukt whiskyProdukt) {
+        // pladsHolder til at lave HistoriskRapport
+    }
+
+
     // Get metode
     public static List<Destillat> getDestillater() {
         return new ArrayList<>(storage.getDestillater());
     }
 
-    public static List<Fad> getFade(){return new ArrayList<>(storage.getFade());}
+    public static List<Fad> getFade(){
+        return new ArrayList<>(storage.getFade());
+    }
+
+    public static List<WhiskyProdukt> getWhiskyProdukter(){
+        return new ArrayList<>(storage.getWhiskyProdukter());
+    }
 }

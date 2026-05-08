@@ -106,9 +106,6 @@ public class Destillat implements Serializable {
 
     @Override
     public String toString() {
-        return "Destillat{" +
-                "ID=" + ID +
-                ", aktuelMængdeVæske=" + aktuelMængdeVæske +
-                '}';
+        return "Destillat med id: " + ID + " med: " + aktuelMængdeVæske + " L";
     }
 }

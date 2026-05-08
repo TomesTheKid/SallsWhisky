@@ -55,4 +55,9 @@ public class Fadbidrag {
     }
     //---------------------------------------------------
 
+
+    @Override
+    public String toString() {
+        return "Fadbidrag med: " + mængdeLiter + 'L';
+    }
 }
