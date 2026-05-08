@@ -109,6 +109,9 @@ public class WhiskyPane extends GridPane {
     }
 
     private void printRapport() {
-        // TilSenere;
+        WhiskyProdukt wp = lvwWhisky.getSelectionModel().getSelectedItem();
+        if(wp != null){
+            txaWhiskyDetaljer.setText(wp.genererHistoriskRapport());
+        }
     }
 }
