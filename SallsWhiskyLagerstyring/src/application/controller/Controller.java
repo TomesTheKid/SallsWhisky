@@ -87,6 +87,7 @@ public class Controller {
                                               Fad fad,
                                               List<Double> mængder, List<Destillat> destillater) {
 
+        //Spørg om test er nøødvendig når i har en pre
         if (mængder.size() != destillater.size()) {
             throw new IllegalArgumentException("Mængder og destillater matcher ikke");
         }

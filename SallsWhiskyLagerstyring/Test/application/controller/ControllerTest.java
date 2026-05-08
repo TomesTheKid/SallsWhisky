@@ -85,12 +85,33 @@ class ControllerTest {
         destillater.add(d1);
         destillater.add(d2);
 
+        double startMængdeD1 = d1.getAktuelMaengdeVaeske();
+        double startMængdeD2 = d2.getAktuelMaengdeVaeske();
+
         Påfyldning testPåfyldning = Controller.createPåfyldning(startDato, ansvarlig, fad, mængder, destillater);
 
+        assertNotNull(testPåfyldning);
         assertEquals(startDato, testPåfyldning.getDato());
         assertEquals(ansvarlig, testPåfyldning.getAnsvarlig());
         assertEquals(fad, testPåfyldning.getFad());
-        assertEquals();
 
+        assertEquals(2, testPåfyldning.getVæskeMængder().size());
+
+        assertEquals(startMængdeD1 - 50, d1.getAktuelMaengdeVaeske(), 0.0001);
+        assertEquals(startMængdeD2 - 100, d2.getAktuelMaengdeVaeske(), 0.0001);
+
+        assertTrue(fad.getPåfyldninger().contains(testPåfyldning));
+
+        //TC2
+        Fad fejlFad = new Fad(3, "Karl", "Spanien", 1, Alkoholtype.RØDVIN, 200);
+
+        List<Double> fejlMængder = new ArrayList<>();
+        fejlMængder.add(200.0);
+        fejlMængder.add(100.0);
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () ->{
+            Controller.createPåfyldning(startDato, ansvarlig, fejlFad, fejlMængder, destillater);
+        });
+        assertEquals(exception.getMessage(), "Der er ikke plads på faldet");
     }
 }
