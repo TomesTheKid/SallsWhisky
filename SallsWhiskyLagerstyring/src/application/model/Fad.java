@@ -12,7 +12,7 @@ public class Fad implements Serializable {
     private double størrelse;
     private final ArrayList<Påfyldning> påfyldninger = new ArrayList<>();
     private boolean erAktiv;
-    //private Lokation lokation
+    private LagerPlacering lagerPlacering;
 
     /**
      * Opretter Fad
@@ -25,8 +25,6 @@ public class Fad implements Serializable {
         this.antalBrug = antalBrug;
         this.tidligereAlkoholindhold = tidligereAlkoholindhold;
         this.størrelse = størrelse;
-        //this.loktaion = lokation;
-        //Husk at tilføje lokation
         this.erAktiv = false;
     }
 
@@ -57,9 +55,28 @@ public class Fad implements Serializable {
         return erAktiv;
     }
 
-    //    public Lokation getLokation(){
-//        return lokation;
-//    }
+    public LagerPlacering getLagerPlacering(){
+        return lagerPlacering;
+    }
+
+    /**
+     * Sætter tovejslinket til LagerPlacering.
+     * Kaldes normalt via LagerPlacering.setFad().
+     */
+    public void setLagerPlacering(LagerPlacering lagerPlacering) {
+        if (this.lagerPlacering != lagerPlacering) {
+            LagerPlacering gammel = this.lagerPlacering;
+            this.lagerPlacering = lagerPlacering;
+            if (gammel != null && gammel.getFad() == this) {
+                gammel.setFad(null);
+            }
+            if (lagerPlacering != null && lagerPlacering.getFad() != this) {
+                lagerPlacering.setFad(this);
+            }
+        }
+    }
+
+
     //------------------------------------------------------------------------------------
     //Link til Påfyldning-Klasse
     public ArrayList<Påfyldning> getPåfyldninger() {
@@ -85,9 +102,6 @@ public class Fad implements Serializable {
     }
     //-----------------------------
 
-    //TODO
-    //public void flytFad(Lokation lokation){
-    // }
 
 
     @Override
