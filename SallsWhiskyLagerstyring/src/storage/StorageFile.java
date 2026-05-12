@@ -3,6 +3,7 @@ package storage;
 import application.controller.Storage;
 import application.model.Destillat;
 import application.model.Fad;
+import application.model.Lager;
 import application.model.WhiskyProdukt;
 
 import java.io.Serializable;
@@ -14,6 +15,7 @@ public class StorageFile implements Storage, Serializable {
     private final List<Destillat> destillater = new ArrayList<>();
     private final List<Fad> fade = new ArrayList<>();
     private final List<WhiskyProdukt> whiskyProdukter = new ArrayList<>();
+    private final List<Lager> lagre = new ArrayList<>();
     //-----------------------------------------------
     //Destillat
 
@@ -57,5 +59,14 @@ public class StorageFile implements Storage, Serializable {
     public void addWhiskyProdukt(WhiskyProdukt whiskyProdukt) { whiskyProdukter.add(whiskyProdukt); }
     @Override
     public void removeWhiskyProdukt(WhiskyProdukt whiskyProdukt) { whiskyProdukter.remove(whiskyProdukt); }
+
+    //--------------------------------------------------
+    // Lager
+    @Override
+    public List<Lager> getLagre() { return new ArrayList<>(lagre); }
+    @Override
+    public void addLager(Lager lager) { lagre.add(lager); }
+    @Override
+    public void removeLager(Lager lager) { lagre.remove(lager); }
 
 }

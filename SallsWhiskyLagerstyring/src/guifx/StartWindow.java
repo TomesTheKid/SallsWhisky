@@ -10,14 +10,14 @@ import javafx.stage.Stage;
 public class StartWindow extends Application {
     private Stage stage;
     private DestilleringPane destilleringPane;
-    private Pane lagerPane;
+    private LagerPane lagerPane;
     private FadPane fadPane;
     private WhiskyPane whiskyPane;
 
     @Override
     public void start(Stage stage) {
         this.stage = stage;
-        this.lagerPane = new Pane();
+        this.lagerPane = new LagerPane(stage);
         this.destilleringPane = new DestilleringPane(stage);
         this.fadPane = new FadPane(stage);
         this.whiskyPane = new WhiskyPane(stage);

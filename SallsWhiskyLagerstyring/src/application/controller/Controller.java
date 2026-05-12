@@ -184,4 +184,68 @@ public class Controller {
     public static List<WhiskyProdukt> getWhiskyProdukter(){
         return new ArrayList<>(storage.getWhiskyProdukter());
     }
+
+
+    // LAGER
+
+    /**
+     * Opretter et Lager og gemmer det i storage.
+     * Pre: lagerNavn og adresse != null og ikke tomme
+     */
+    public static Lager createLager(String lagerNavn, String adresse){
+        if(lagerNavn == null || lagerNavn.isBlank()){
+            throw new IllegalArgumentException("Lagernavn må ikke være tomt");
+        }
+        if(adresse == null || adresse.isBlank()){
+            throw new IllegalArgumentException("Adresse må ikke være tom");
+        }
+        Lager lager = new Lager(lagerNavn, adresse);
+        storage.addLager(lager);
+        return lager;
+    }
+
+    /**
+     * Opretter en LagerPlacering på det givne lager (komposition via Lager).
+     * Pre: lager != null, reol/række/hylde >= 0
+     */
+    public static LagerPlacering createLagerPlacering(Lager lager, int reol, int række, int hylde) {
+        if (lager == null) {
+            throw new IllegalArgumentException("Lager må ikke være null");
+        }
+        return lager.createLagerPlacering(reol, række, hylde);
+    }
+
+    /**
+     * Tildeler et fad til en lagerplacering.
+     * Kaster IllegalArgumentException hvis pladsen allerede er optaget.
+     * Pre: lagerPlacering og fad != null
+     */
+    public static void tildelFadTilPlacering(LagerPlacering lagerPlacering, Fad fad) {
+        if (lagerPlacering == null || fad == null) {
+            throw new IllegalArgumentException("LagerPlacering og Fad må ikke være null");
+        }
+        if (lagerPlacering.erOptaget() && lagerPlacering.getFad() != fad) {
+            throw new IllegalArgumentException("Pladsen er allerede optaget af et andet fad");
+        }
+        lagerPlacering.setFad(fad);
+    }
+
+    /**
+     * Flytter et fad til en ny lagerplacering.
+     * Den gamle placering bliver frigjort automatisk via tovejslinket.
+     * Pre: fad og nyPlacering != null
+     */
+    public static void flytFad(Fad fad, LagerPlacering nyPlacering) {
+        if (fad == null || nyPlacering == null) {
+            throw new IllegalArgumentException("Fad og placering må ikke være null");
+        }
+        if (nyPlacering.erOptaget() && nyPlacering.getFad() != fad) {
+            throw new IllegalArgumentException("Den nye placering er allerede optaget");
+        }
+        nyPlacering.setFad(fad);
+    }
+
+    public static List<Lager> getLagre(){
+        return new ArrayList<>(storage.getLagre());
+    }
 }
