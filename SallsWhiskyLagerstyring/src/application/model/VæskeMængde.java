@@ -32,6 +32,14 @@ public class VæskeMængde implements Serializable {
     }
     //---------------------------------------------
 
+    public void appendReportLine(StringBuilder sb) {
+        sb.append("    - ").append(String.format("%.1f", mængde)).append(" L");
+        if (destillat != null) {
+            sb.append(destillat.toReportLine());
+        }
+        sb.append("\n");
+    }
+
     @Override
     public String toString() {
         return String.format("%.1f L af %s", mængde, destillat);

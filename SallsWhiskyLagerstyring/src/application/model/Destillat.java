@@ -103,6 +103,14 @@ public class Destillat implements Serializable {
         aktuelMængdeVæske -= mængde;
     }
 
+    public String toReportLine() {
+        return " | ID: " + ID
+                + " | Kornsort: " + kornsort
+                + " | Alkohol: " + String.format("%.1f", alkoholprocent) + "%"
+                + " | Periode: " + startDato + " - " + slutDato
+                + " | Maltbatch: " + maltbatch;
+    }
+
     @Override
     public String toString() {
         return "Destillat med id: " + ID + " med: " + aktuelMængdeVæske + " L";

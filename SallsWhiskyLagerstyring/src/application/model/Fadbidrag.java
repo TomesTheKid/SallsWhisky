@@ -57,6 +57,12 @@ public class Fadbidrag implements Serializable {
     }
     //---------------------------------------------------
 
+    public void appendReportBlock(StringBuilder sb) {
+        sb.append("\nFadbidrag: ").append(String.format("%.1f", mængdeLiter)).append(" L\n");
+        if (påfyldning != null) {
+            påfyldning.appendReportBlock(sb);
+        }
+    }
 
     @Override
     public String toString() {
