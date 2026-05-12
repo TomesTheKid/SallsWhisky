@@ -81,7 +81,6 @@ public class Destillat implements Serializable {
         return aktuelMængdeVæske;
     }
     //----------------------------------------------------------------
-
     /**
      * Sætter Destillatets slutdato til dagens dato
      */
