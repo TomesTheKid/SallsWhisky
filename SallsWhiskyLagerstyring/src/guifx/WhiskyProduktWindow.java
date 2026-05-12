@@ -9,6 +9,7 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -60,6 +61,16 @@ public class WhiskyProduktWindow extends Stage {
         pane.setHgap(10);
         pane.setVgap(10);
         pane.setGridLinesVisible(false);
+
+        ColumnConstraints col0 = new ColumnConstraints();
+        col0.setMinWidth(130);
+        ColumnConstraints col1 = new ColumnConstraints();
+        col1.setMinWidth(150);
+        ColumnConstraints col2 = new ColumnConstraints();
+        col2.setMinWidth(120);
+        ColumnConstraints col3 = new ColumnConstraints();
+        col3.setMinWidth(200);
+        pane.getColumnConstraints().addAll(col0, col1, col2, col3);
 
         // Venstre side: produktinformation
         txfBatchID          = new TextField(); txfBatchID.setPromptText("fx 42");

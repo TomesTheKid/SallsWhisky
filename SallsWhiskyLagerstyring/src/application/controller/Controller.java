@@ -44,6 +44,18 @@ public class Controller {
             throw new IllegalArgumentException("Slutdato er før startdato");
         }
 
+        if(mængdeVæske <= 0){
+            throw new IllegalArgumentException("Mængde væske skal være større end 0");
+        }
+
+        if(alkoholprocent <= 40 || alkoholprocent > 100){
+            throw new IllegalArgumentException("Alkoholprocent skal være mellem 40 og 100");
+        }
+
+        if(aktuelMængdeVæske < 0 || aktuelMængdeVæske > mængdeVæske){
+            throw new IllegalArgumentException("Aktuel mængde væske kan ikke overstige den samlede mængde");
+        }
+
         Destillat destillat = new Destillat(
                 startDato,
                 slutDato,
@@ -87,7 +99,7 @@ public class Controller {
                                               Fad fad,
                                               List<Double> mængder, List<Destillat> destillater) {
 
-        //Spørg om test er nøødvendig når i har en pre
+        //Spørg om test er nøødvendig når vi har en pre
         if (mængder.size() != destillater.size()) {
             throw new IllegalArgumentException("Mængder og destillater matcher ikke");
         }
@@ -100,7 +112,7 @@ public class Controller {
             totalMængde += m;
         }
         if (totalMængde > fad.getStørrelse()){
-            throw new IllegalArgumentException("Der er ikke plads på faldet");
+            throw new IllegalArgumentException("Der er ikke plads på fadet");
         }
 
         Påfyldning påfyldning = new Påfyldning(dato, ansvarlig, fad);

@@ -112,6 +112,6 @@ class ControllerTest {
         Exception exception = assertThrows(IllegalArgumentException.class, () ->{
             Controller.createPåfyldning(startDato, ansvarlig, fejlFad, fejlMængder, destillater);
         });
-        assertEquals(exception.getMessage(), "Der er ikke plads på faldet");
+        assertEquals(exception.getMessage(), "Der er ikke plads på fadet");
     }
 }
