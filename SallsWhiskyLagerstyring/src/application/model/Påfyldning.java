@@ -100,6 +100,17 @@ public class Påfyldning implements Serializable {
 
     //----------------------------------------------------
 
+    public void appendReportBlock(StringBuilder sb) {
+        sb.append("  Påfyldningsdato: ").append(dato).append("\n");
+        sb.append("  Ansvarlig:       ").append(ansvarlig).append("\n");
+        if (fad != null) {
+            fad.appendReportLine(sb);
+        }
+        sb.append("  Destillater i påfyldning:\n");
+        for (VæskeMængde vm : væskeMængder) {
+            vm.appendReportLine(sb);
+        }
+    }
 
     @Override
     public String toString() {

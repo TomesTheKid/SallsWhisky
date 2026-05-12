@@ -102,6 +102,13 @@ public class Fad implements Serializable {
     }
     //-----------------------------
 
+    public void appendReportLine(StringBuilder sb) {
+        sb.append("  Fad nr:          ").append(nummer).append("\n");
+        sb.append("  Fad størrelse:   ").append(String.format("%.1f", størrelse)).append(" L\n");
+        sb.append("  Fad leverandør:  ").append(leverandør).append("\n");
+        sb.append("  Fad land:        ").append(land).append("\n");
+        sb.append("  Tidl. alkohol:   ").append(tidligereAlkoholindhold).append("\n");
+    }
 
 
     @Override
