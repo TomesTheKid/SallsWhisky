@@ -43,7 +43,7 @@ class ControllerTest {
         kommentar = "Første destillat";
         newMakeNr = 1;
         ID = 1;
-        aktuelMængdeVæske = mængdeVæske;
+        aktuelMængdeVæske = 300;
         ansvarlig = "Bo";
         fad = new Fad(3, "Karl", "Spanien", 1, Alkoholtype.RØDVIN, 200);
         d1 = new Destillat(startDato, slutDato, maltbatch, Kornsort.IRINA, mængdeVæske, alkoholprocent, rygemateriale, null, 1, 101, aktuelMængdeVæske);
@@ -72,6 +72,63 @@ class ControllerTest {
 
         assertEquals(1, Controller.getStorage().getDestillater().size());
         assertTrue(Controller.getStorage().getDestillater().contains(testDestillat));
+
+        //TC2
+        Exception exception2 = assertThrows(IllegalArgumentException.class, () ->{
+            Controller.createDestillat(LocalDate.of(2026,5,5), LocalDate.of(2026,5,2),maltbatch,kornsort,mængdeVæske,alkoholprocent,rygemateriale,kommentar,newMakeNr, ID, aktuelMængdeVæske);
+        });
+        assertEquals(exception2.getMessage(), "Slutdato er før startdato");
+
+        //TC3
+        Exception exception3 = assertThrows(IllegalArgumentException.class, () ->{
+            Controller.createDestillat(startDato, slutDato,maltbatch,kornsort,-100,alkoholprocent,rygemateriale,kommentar,newMakeNr, ID, aktuelMængdeVæske);
+        });
+        assertEquals(exception3.getMessage(), "Mængde væske skal være større end 0");
+
+        //TC4
+        Exception exception4 = assertThrows(IllegalArgumentException.class, () ->{
+            Controller.createDestillat(startDato, slutDato,maltbatch,kornsort,0,alkoholprocent,rygemateriale,kommentar,newMakeNr, ID, aktuelMængdeVæske);
+        });
+        assertEquals(exception4.getMessage(), "Mængde væske skal være større end 0");
+
+        //TC5
+        Exception exception5 = assertThrows(IllegalArgumentException.class, () ->{
+            Controller.createDestillat(startDato, slutDato,maltbatch,kornsort,mængdeVæske,35,rygemateriale,kommentar,newMakeNr, ID, aktuelMængdeVæske);
+        });
+        assertEquals(exception5.getMessage(), "Alkoholprocent skal være mellem 40 og 100");
+
+        //TC6
+        Destillat td6 = Controller.createDestillat(startDato, slutDato, maltbatch, kornsort, mængdeVæske, 40, rygemateriale, kommentar, newMakeNr, ID, aktuelMængdeVæske);
+        assertEquals(40, td6.getAlkoholprocent());
+        assertTrue(Controller.getStorage().getDestillater().contains(td6));
+
+        //TC7
+        Destillat td7 = Controller.createDestillat(startDato, slutDato, maltbatch, kornsort, mængdeVæske, 100, rygemateriale, kommentar, newMakeNr, ID, aktuelMængdeVæske);
+        assertEquals(100, td7.getAlkoholprocent());
+        assertTrue(Controller.getStorage().getDestillater().contains(td7));
+
+        //TC8
+        Exception exception8 = assertThrows(IllegalArgumentException.class, () ->{
+            Controller.createDestillat(startDato, slutDato,maltbatch,kornsort,mængdeVæske,101,rygemateriale,kommentar,newMakeNr, ID, aktuelMængdeVæske);
+        });
+        assertEquals(exception8.getMessage(), "Alkoholprocent skal være mellem 40 og 100");
+
+        //TC9
+        Exception exception9 = assertThrows(IllegalArgumentException.class, () ->{
+            Controller.createDestillat(startDato, slutDato,maltbatch,kornsort,mængdeVæske,alkoholprocent,rygemateriale,kommentar,newMakeNr, ID, -10);
+        });
+        assertEquals(exception9.getMessage(), "Aktuel mængde væske kan ikke overstige den samlede mængde");
+
+        //TC10
+        Exception exception10 = assertThrows(IllegalArgumentException.class, () ->{
+            Controller.createDestillat(startDato, slutDato,maltbatch,kornsort,mængdeVæske,alkoholprocent,rygemateriale,kommentar,newMakeNr, ID, 301);
+        });
+        assertEquals(exception10.getMessage(), "Aktuel mængde væske kan ikke overstige den samlede mængde");
+
+        //TC11
+        Destillat td11 = Controller.createDestillat(startDato, slutDato, maltbatch, kornsort, mængdeVæske, alkoholprocent, rygemateriale, kommentar, newMakeNr, ID, 0);
+        assertEquals(0, td11.getAktuelMaengdeVaeske());
+        assertTrue(Controller.getStorage().getDestillater().contains(td11));
     }
 
     @Test
@@ -113,5 +170,6 @@ class ControllerTest {
             Controller.createPåfyldning(startDato, ansvarlig, fejlFad, fejlMængder, destillater);
         });
         assertEquals(exception.getMessage(), "Der er ikke plads på fadet");
+
     }
 }
