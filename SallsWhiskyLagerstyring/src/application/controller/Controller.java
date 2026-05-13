@@ -129,7 +129,6 @@ public class Controller {
     /**
      * Opretter et WhiskyProdukt. For hvert par (påfyldning, mængde) oprettes et Fadbidrag,
      * som via sine set-metoder kobler sig selv til både Påfyldning og WhiskyProdukt.
-     * Pre: påfyldninger og mængder har samme størrelse og er ikke tomme
      */
     public static WhiskyProdukt createWhiskyProdukt(int batchID,
                                                     double vandMængde,
