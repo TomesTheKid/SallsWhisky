@@ -119,6 +119,6 @@ public class WhiskyProdukt implements Serializable {
 
     @Override
     public String toString() {
-        return "WhiskyProdukt med batchID" + batchID;
+        return "WhiskyProdukt med batchID " + batchID;
     }
 }
