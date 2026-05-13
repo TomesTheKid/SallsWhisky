@@ -37,9 +37,6 @@ public class Lager implements Serializable {
 
     @Override
     public String toString() {
-        return "Lager{" +
-                "lagerNavn='" + lagerNavn + '\'' +
-                ", adresse='" + adresse + '\'' +
-                '}';
+        return lagerNavn + adresse;
     }
 }

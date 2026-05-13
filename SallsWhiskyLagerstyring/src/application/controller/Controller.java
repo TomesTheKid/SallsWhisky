@@ -24,9 +24,6 @@ public class Controller {
     /**
      * Hvis startDato er efter slutDato kastes en IllegalArgumentException og
      * destillat oprettes ikke
-     * Hivs mængdeVæske <= 0 kastes en IllegalArgumentException
-     * Hvis alkoholprocent <= 40 eller alkoholprocent > 100 kastes en IllegalArgumentException
-     * Hvis aktuelMængdeVæske < 0 eller aktuelMængdeVæske > mængdeVæske kastes en IllegalArgumentException
      * Tilføjer objektet til storage
      * Pre: startDato, slutDato, maltbatch, kornsort, mængdeVæske != null
      * Pre: alkoholprocent, rygemateriale, newMakeNr, ID != null
@@ -42,38 +39,32 @@ public class Controller {
                                             String kommentar,
                                             int newMakeNr,
                                             int ID,
-                                            double aktuelMængdeVæske){
-        if (slutDato.isBefore(startDato)){
-            throw new IllegalArgumentException("Slutdato er før startdato");
-        }
-
-        if(mængdeVæske <= 0){
-            throw new IllegalArgumentException("Mængde væske skal være større end 0");
-        }
-
-        if(alkoholprocent < 40 || alkoholprocent > 100){
-            throw new IllegalArgumentException("Alkoholprocent skal være mellem 40 og 100");
-        }
-
-        if(aktuelMængdeVæske < 0 || aktuelMængdeVæske > mængdeVæske){
-            throw new IllegalArgumentException("Aktuel mængde væske kan ikke overstige den samlede mængde");
-        }
-
-        Destillat destillat = new Destillat(
-                startDato,
-                slutDato,
-                maltbatch,
-                kornsort,
-                mængdeVæske,
-                alkoholprocent,
-                rygemateriale,
-                kommentar,
-                newMakeNr,
-                ID,
-                aktuelMængdeVæske);
+                                            double aktuelMængdeVæske) {
+        validerDestillat(startDato, slutDato, mængdeVæske, alkoholprocent, aktuelMængdeVæske);
+        Destillat destillat = new Destillat(startDato, slutDato, maltbatch, kornsort,
+                mængdeVæske, alkoholprocent, rygemateriale, kommentar, newMakeNr, ID, aktuelMængdeVæske);
         storage.addDestillat(destillat);
         return destillat;
     }
+
+    private static void validerDestillat(LocalDate startDato, LocalDate slutDato,
+                                         double mængdeVæske, double alkoholprocent,
+                                         double aktuelMængdeVæske) {
+        if (slutDato.isBefore(startDato)) {
+            throw new IllegalArgumentException("Slutdato er før startdato");
+        }
+        if (mængdeVæske <= 0) {
+            throw new IllegalArgumentException("Mængde væske skal være større end 0");
+        }
+        if (alkoholprocent <= 40 || alkoholprocent > 100) {
+            throw new IllegalArgumentException("Alkoholprocent skal være mellem 40 og 100");
+        }
+        if (aktuelMængdeVæske < 0 || aktuelMængdeVæske > mængdeVæske) {
+            throw new IllegalArgumentException("Aktuel mængde væske kan ikke overstige den samlede mængde");
+        }
+    }
+
+
 
     /**
      * Pre: nummer, leverandør, land, antalBrug, tidligereAlkoholindhold, størrelse != null
@@ -97,21 +88,10 @@ public class Controller {
      * Pre: List med mængder og List med destillater skal være lige store
      * @return påfyldnings objekt
      */
-    public static Påfyldning createPåfyldning(LocalDate dato,
-                                              String ansvarlig,
+    public static Påfyldning createPåfyldning(LocalDate dato, String ansvarlig,
                                               Fad fad,
                                               List<Double> mængder, List<Destillat> destillater) {
-
-        double totalMængde = 0;
-        for (Double m : mængder){
-            if (m == null || m <= 0) {
-                throw new IllegalArgumentException("Mængde skal være > 0");
-            }
-            totalMængde += m;
-        }
-        if (totalMængde > fad.getStørrelse()){
-            throw new IllegalArgumentException("Der er ikke plads på fadet");
-        }
+        validerMængder(mængder, fad);
 
         Påfyldning påfyldning = new Påfyldning(dato, ansvarlig, fad);
         for (int i = 0; i < mængder.size(); i++) {
@@ -124,6 +104,22 @@ public class Controller {
         fad.addPåfyldning(påfyldning);
         return påfyldning;
     }
+
+
+    private static void validerMængder(List<Double> mængder, Fad fad) {
+        double totalMængde = 0;
+        for (Double m : mængder) {
+            if (m == null || m <= 0) {
+                throw new IllegalArgumentException("Mængde skal være > 0");
+            }
+            totalMængde += m;
+        }
+        if (totalMængde > fad.getStørrelse()) {
+            throw new IllegalArgumentException("Der er ikke plads på fadet");
+        }
+    }
+
+
 
     // --- WhiskyProdukt ---
     /**
@@ -141,23 +137,33 @@ public class Controller {
                                                     int årstal,
                                                     List<Påfyldning> påfyldninger,
                                                     List<Double> mængder) {
-        if (påfyldninger == null || mængder == null
-                || påfyldninger.size() != mængder.size()
-                || påfyldninger.isEmpty()) {
-            throw new IllegalArgumentException("Påfyldninger og mængder skal matche og ikke være tomme");
-        }
+        validerWhiskyProdukt(alkoholprocent, påfyldninger, mængder);
         WhiskyProdukt wp = new WhiskyProdukt(batchID, vandMængde, kvalitetsstempel, alkoholprocent,
                 størrelse, vandkilde, beskrivelse, nummer, årstal);
-
         for (int i = 0; i < påfyldninger.size(); i++) {
             Fadbidrag fb = new Fadbidrag(mængder.get(i));
             fb.setPåfyldning(påfyldninger.get(i));
             fb.setWhiskyProdukt(wp);
         }
-
         storage.addWhiskyProdukt(wp);
         return wp;
     }
+
+    private static void validerWhiskyProdukt(double alkoholprocent,
+                                             List<Påfyldning> påfyldninger,
+                                             List<Double> mængder) {
+        if (påfyldninger == null || mængder == null
+                || påfyldninger.size() != mængder.size()
+                || påfyldninger.isEmpty()) {
+            throw new IllegalArgumentException("Påfyldninger og mængder skal matche og ikke være tomme");
+        }
+        if (alkoholprocent <= 0 || alkoholprocent > 100) {
+            throw new IllegalArgumentException("Alkoholprocent skal være mellem 0 og 100");
+        }
+    }
+
+
+
 
     /**
      * Genererer en historisk rapport for et WhiskyProdukt og skriver den måske til en fil.
