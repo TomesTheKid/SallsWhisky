@@ -63,9 +63,6 @@ public class LagerPlacering implements Serializable {
 
     @Override
     public String toString() {
-        return "LagerPlacering{" +
-                "reol=" + reol +
-                ", række=" + række +
-                ", hylde=" + hylde + lager.getLagerNavn();
+        return "reol " + reol + ", række " + række + ", hylde " + hylde;
     }
 }
