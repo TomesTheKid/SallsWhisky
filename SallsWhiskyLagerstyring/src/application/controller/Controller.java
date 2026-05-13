@@ -24,6 +24,9 @@ public class Controller {
     /**
      * Hvis startDato er efter slutDato kastes en IllegalArgumentException og
      * destillat oprettes ikke
+     * Hivs mængdeVæske <= 0 kastes en IllegalArgumentException
+     * Hvis alkoholprocent <= 40 eller alkoholprocent > 100 kastes en IllegalArgumentException
+     * Hvis aktuelMængdeVæske < 0 eller aktuelMængdeVæske > mængdeVæske kastes en IllegalArgumentException
      * Tilføjer objektet til storage
      * Pre: startDato, slutDato, maltbatch, kornsort, mængdeVæske != null
      * Pre: alkoholprocent, rygemateriale, newMakeNr, ID != null
@@ -48,7 +51,7 @@ public class Controller {
             throw new IllegalArgumentException("Mængde væske skal være større end 0");
         }
 
-        if(alkoholprocent <= 40 || alkoholprocent > 100){
+        if(alkoholprocent < 40 || alkoholprocent > 100){
             throw new IllegalArgumentException("Alkoholprocent skal være mellem 40 og 100");
         }
 
