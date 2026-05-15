@@ -31,8 +31,8 @@ public class WhiskyProdukt implements Serializable {
         this.nummer = nummer;
         this.årstal = årstal;
     }
-    //--------------------------------------
-    //Get metoder
+
+    //--------GET METODER-----------
     public int getBatchID() {
         return batchID;
     }
@@ -68,6 +68,7 @@ public class WhiskyProdukt implements Serializable {
     public int getÅrstal() {
         return årstal;
     }
+
     //--------------------------------------
     //Link til Fadbidrag
 
@@ -89,6 +90,7 @@ public class WhiskyProdukt implements Serializable {
         }
     }
 
+    //--------------------------------------
 
     /**
      * Genererer en historisk rapport som en String

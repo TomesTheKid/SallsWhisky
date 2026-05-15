@@ -19,6 +19,7 @@ public class LagerPlacering implements Serializable {
         this.lager = lager;
     }
 
+    //---------GET METODER-------------
     public int getReol() {
         return reol;
     }
@@ -38,6 +39,7 @@ public class LagerPlacering implements Serializable {
     public Fad getFad() {
         return fad;
     }
+    //-------------------------------------------
 
     /**
      * Tildeler et fad til denne placering og opdaterer tovejslinket.
@@ -57,6 +59,7 @@ public class LagerPlacering implements Serializable {
         }
     }
 
+    //--------------------------------------------
     public boolean erOptaget() {
         return fad != null;
     }

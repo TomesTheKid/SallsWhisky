@@ -15,10 +15,11 @@ public class VæskeMængde implements Serializable {
         this.destillat = destillat;
     }
 
-    //Get metoder
+    //--------------GET METODER----------------
     public double getMængde() {
         return mængde;
     }
+
     //----------------------------------
     //Linkt til Destillat-Klasse
     public Destillat getDestillat() {
@@ -30,6 +31,7 @@ public class VæskeMængde implements Serializable {
             this.destillat = destillat;
         }
     }
+
     //---------------------------------------------
 
     public void appendReportLine(StringBuilder sb) {

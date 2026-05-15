@@ -14,11 +14,11 @@ public class Fadbidrag implements Serializable {
         this.mængdeLiter = mængdeLiter;
     }
 
-    //-------------------------------------------------
-    //Get metoder
+    //----------GET METODER-----------------
     public double getMængdeLiter() {
         return mængdeLiter;
     }
+
     //-----------------------------------------
     //Link til Påfyldning
     public Påfyldning getPåfyldning() {
@@ -37,6 +37,7 @@ public class Fadbidrag implements Serializable {
             }
         }
     }
+
     //-------------------------------------------------------
     //Link til WhiskyProdukt
     public WhiskyProdukt getWhiskyProdukt() {
@@ -55,6 +56,7 @@ public class Fadbidrag implements Serializable {
             }
         }
     }
+
     //---------------------------------------------------
 
     public void appendReportBlock(StringBuilder sb) {
