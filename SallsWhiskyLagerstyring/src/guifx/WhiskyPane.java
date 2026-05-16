@@ -92,10 +92,11 @@ public class WhiskyPane extends GridPane {
         sb.append("\nFadbidrags (").append(wp.getFadbidrags().size()).append("):");
         for (Fadbidrag fb : wp.getFadbidrags()) {
             sb.append("\n  - ").append(String.format("%.1f", fb.getMængdeLiter())).append(" L");
-            if (fb.getPåfyldning() != null && fb.getPåfyldning().getFad() != null) {
-                sb.append(" fra fad nr. ").append(fb.getPåfyldning().getFad().getNummer());
+            if (fb.getFadNummer() != -1) {
+                sb.append(" fra fad nr. ").append(fb.getFadNummer());
             }
         }
+
         txaWhiskyDetaljer.setText(sb.toString());
     }
 

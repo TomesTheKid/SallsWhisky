@@ -19,6 +19,13 @@ public class Fadbidrag implements Serializable {
         return mængdeLiter;
     }
 
+    public int getFadNummer(){
+        if(påfyldning == null || påfyldning.getFad() == null){
+            return -1;
+        }
+        return påfyldning.getFad().getNummer();
+    }
+
     //-----------------------------------------
     //Link til Påfyldning
     public Påfyldning getPåfyldning() {

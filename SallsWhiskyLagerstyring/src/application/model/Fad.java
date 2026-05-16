@@ -51,10 +51,6 @@ public class Fad implements Serializable {
 
     public double getStørrelse() { return størrelse;}
 
-    public boolean isErAktiv() {
-        return erAktiv;
-    }
-
     public LagerPlacering getLagerPlacering(){
         return lagerPlacering;
     }

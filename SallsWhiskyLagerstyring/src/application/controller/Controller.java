@@ -104,14 +104,19 @@ public class Controller {
     }
 
     private static void validerMængder(List<Double> mængder, Fad fad) {
-        double totalMængde = 0;
+        if(fad.getPåfyldninger().size() >= 3){
+            throw new IllegalArgumentException("Et fad må kun fyldes op til 3 gange");
+        }
+        double nyMængde = 0;
         for (Double m : mængder) {
             if (m == null || m <= 0) {
-                throw new IllegalArgumentException("Mængde skal være > 0");
+                throw new IllegalArgumentException("Mængde skal være over 0");
             }
-            totalMængde += m;
+            nyMængde += m;
         }
-        if (totalMængde > fad.getStørrelse()) {
+        double optaget = 0;
+        for(Påfyldning p : fad.getPåfyldninger()) optaget += p.getSamletPåfyldtMængde();
+        if (optaget + nyMængde > fad.getStørrelse()) {
             throw new IllegalArgumentException("Der er ikke plads på fadet");
         }
     }

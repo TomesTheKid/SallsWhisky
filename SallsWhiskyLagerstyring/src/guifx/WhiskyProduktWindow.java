@@ -26,7 +26,6 @@ public class WhiskyProduktWindow extends Stage {
     private final ObservableList<String> visningList = FXCollections.observableArrayList();
 
     private ComboBox<Fad> cbFad;
-    private ComboBox<Påfyldning> cbPåfyldning;
     private CheckBox cbKunModne;
     private TextField txfMængde;
     private ListView<String> lvwFadbidrags;
@@ -102,35 +101,19 @@ public class WhiskyProduktWindow extends Stage {
         pane.add(cbFad, 3, 0);
         cbKunModne.setOnAction(e -> opdaterFadListe());
 
-        pane.add(new Label("Påfyldning:"), 2, 1);
-        cbPåfyldning = new ComboBox<>();
-        cbPåfyldning.setPrefWidth(200);
-        pane.add(cbPåfyldning, 3, 1);
-
-        cbFad.setOnAction(e -> {
-            Fad fad = cbFad.getSelectionModel().getSelectedItem();
-            if (fad != null) {
-                cbPåfyldning.setItems(FXCollections.observableArrayList(fad.getPåfyldninger()));
-            } else {
-                cbPåfyldning.getItems().clear();
-            }
-            cbPåfyldning.getSelectionModel().clearSelection();
-        });
-
-
-        pane.add(new Label("Mængde (L):"), 2, 2);
+        pane.add(new Label("Mængde (L):"), 2, 1);
         txfMængde = new TextField(); txfMængde.setPromptText("fx 80");
-        pane.add(txfMængde, 3, 2);
+        pane.add(txfMængde, 3, 1);
 
         Button btnTilføj = new Button("Tilføj fadbidrag");
-        pane.add(btnTilføj, 3, 3);
+        pane.add(btnTilføj, 3, 2);
         GridPane.setHalignment(btnTilføj, HPos.RIGHT);
         btnTilføj.setOnAction(e -> tilføjFadbidrag());
 
-        pane.add(new Label("Tilføjede fadbidrags:"), 2, 4);
+        pane.add(new Label("Tilføjede fadbidrags:"), 2, 3);
         lvwFadbidrags = new ListView<>(visningList);
         lvwFadbidrags.setPrefHeight(160);
-        pane.add(lvwFadbidrags, 2, 5, 2, 1);
+        pane.add(lvwFadbidrags, 2, 4, 2, 1);
 
         // Fejl og knapper
         lblError = new Label();
@@ -150,7 +133,6 @@ public class WhiskyProduktWindow extends Stage {
         btnGem.setOnAction(e -> okAction());
     }
 
-
     private void opdaterFadListe() {
         if (cbKunModne.isSelected()) {
             cbFad.setItems(FXCollections.observableArrayList(Controller.getFadeModneTilAftapning()));
@@ -158,26 +140,31 @@ public class WhiskyProduktWindow extends Stage {
             cbFad.setItems(FXCollections.observableArrayList(Controller.getFade()));
         }
         cbFad.getSelectionModel().clearSelection();
-        cbPåfyldning.getItems().clear();
     }
 
     private void tilføjFadbidrag() {
         lblError.setText("");
-        // ÆNDRET: læs påfyldning i stedet for fad
-        Påfyldning påfyldning = cbPåfyldning.getSelectionModel().getSelectedItem();
-        if (påfyldning == null) { lblError.setText("Vælg en påfyldning."); return; }
+        Fad fad = cbFad.getSelectionModel().getSelectedItem();
+        if (fad == null) { lblError.setText("Vælg et fad."); return; }
+        List<Påfyldning> påfyldninger = fad.getPåfyldninger();
+        if (påfyldninger.isEmpty()) { lblError.setText("Faddet har ingen påfyldninger."); return; }
         double mængde;
         try {
             mængde = Double.parseDouble(txfMængde.getText().trim());
         } catch (NumberFormatException ex) { lblError.setText("Mængde skal være et tal."); return; }
         if (mængde <= 0) { lblError.setText("Mængde skal være > 0."); return; }
-        valgtePåfyldninger.add(påfyldning);
-        valgteMængder.add(mængde);
-        visningList.add(String.format("%.1f L - %s (fad %d)", mængde, påfyldning, påfyldning.getFad().getNummer()));
+
+        double fadTotal = 0;
+        for (Påfyldning p : påfyldninger) fadTotal += p.getSamletPåfyldtMængde();
+        if (fadTotal == 0) { lblError.setText("Faddet har ingen registreret væske."); return; }
+
+        for (Påfyldning p : påfyldninger) {
+            valgtePåfyldninger.add(p);
+            valgteMængder.add(mængde * (p.getSamletPåfyldtMængde() / fadTotal));
+        }
+        visningList.add(String.format("%.1f L fra Fad %d", mængde, fad.getNummer()));
         txfMængde.clear();
     }
-
-
 
 
     private void okAction() {
