@@ -114,6 +114,6 @@ public class Påfyldning implements Serializable {
 
     @Override
     public String toString() {
-        return "" + væskeMængder + fadbidrags + fad + " ";
+        return "Påfyldt " + dato + " (" + String.format("%.0f", getSamletPåfyldtMængde()) + " L)";
     }
 }

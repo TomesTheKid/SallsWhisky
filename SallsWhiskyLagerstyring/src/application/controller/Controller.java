@@ -56,7 +56,7 @@ public class Controller {
         if (mængdeVæske <= 0) {
             throw new IllegalArgumentException("Mængde væske skal være større end 0");
         }
-        if (alkoholprocent <= 40 || alkoholprocent > 100) {
+        if (alkoholprocent < 40 || alkoholprocent > 100) {
             throw new IllegalArgumentException("Alkoholprocent skal være mellem 40 og 100");
         }
         if (aktuelMængdeVæske < 0 || aktuelMængdeVæske > mængdeVæske) {
@@ -251,5 +251,20 @@ public class Controller {
 
     public static List<Lager> getLagre(){
         return new ArrayList<>(storage.getLagre());
+    }
+
+
+    public static List<Fad> getFadeModneTilAftapning() {
+        List<Fad> modne = new ArrayList<>();
+        LocalDate grænse = LocalDate.now().minusYears(3);
+        for (Fad fad : storage.getFade()) {
+            for (Påfyldning p : fad.getPåfyldninger()) {
+                if (!p.getDato().isAfter(grænse)) {
+                    modne.add(fad);
+                    break;
+                }
+            }
+        }
+        return modne;
     }
 }

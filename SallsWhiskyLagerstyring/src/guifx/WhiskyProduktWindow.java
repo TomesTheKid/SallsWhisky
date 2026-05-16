@@ -28,6 +28,7 @@ public class WhiskyProduktWindow extends Stage {
 
     private ComboBox<Fad> cbFad;
     private ComboBox<Påfyldning> cbPåfyldning;
+    private CheckBox cbKunModne;
     private TextField txfMængde;
     private ListView<String> lvwFadbidrags;
 
@@ -94,13 +95,18 @@ public class WhiskyProduktWindow extends Stage {
         pane.add(new Label("Beskrivelse:"),      0, 8); pane.add(txfBeskrivelse,       1, 8);
 
         // Højre side: fadbidrag-tilføjelse
-        pane.add(new Label("Vælg fad:"), 2, 0);
-        cbFad = new ComboBox<>(FXCollections.observableArrayList(Controller.getFade()));
+        cbKunModne = new CheckBox("Kun modne fade");
+        cbKunModne.setSelected(true);
+        pane.add(cbKunModne, 2, 0);
+        cbFad = new ComboBox<>(FXCollections.observableArrayList(Controller.getFadeModneTilAftapning()));
+        cbFad.setPrefWidth(200);
         pane.add(cbFad, 3, 0);
         cbFad.setOnAction(e -> opdaterPåfyldninger());
+        cbKunModne.setOnAction(e -> opdaterFadListe());
 
-        pane.add(new Label("Vælg påfyldning:"), 2, 1);
+        pane.add(new Label("Påfyldning:"), 2, 1);
         cbPåfyldning = new ComboBox<>(påfyldningerIFad);
+        cbPåfyldning.setPrefWidth(200);
         pane.add(cbPåfyldning, 3, 1);
 
         pane.add(new Label("Mængde (L):"), 2, 2);
@@ -142,6 +148,16 @@ public class WhiskyProduktWindow extends Stage {
             påfyldningerIFad.setAll(fad.getPåfyldninger());
         }
         cbPåfyldning.getSelectionModel().clearSelection();
+    }
+
+    private void opdaterFadListe() {
+        if (cbKunModne.isSelected()) {
+            cbFad.setItems(FXCollections.observableArrayList(Controller.getFadeModneTilAftapning()));
+        } else {
+            cbFad.setItems(FXCollections.observableArrayList(Controller.getFade()));
+        }
+        cbFad.getSelectionModel().clearSelection();
+        påfyldningerIFad.clear();
     }
 
     private void tilføjFadbidrag() {
