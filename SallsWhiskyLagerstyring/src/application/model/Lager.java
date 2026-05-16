@@ -12,7 +12,7 @@ public class Lager implements Serializable {
         this.lagerNavn = lagerNavn;
         this.adresse = adresse;
     }
-
+    //------GET METODER---------
     public String getLagerNavn() {
         return lagerNavn;
     }
@@ -24,6 +24,8 @@ public class Lager implements Serializable {
     public String getAdresse() {
         return adresse;
     }
+
+    //----------------------------------------------
 
     /**
      * Opretter en LagerPlacering og tilføjer den til dette lagers lokationer.

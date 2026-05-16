@@ -162,14 +162,33 @@ class ControllerTest {
         //TC2
         Fad fejlFad = new Fad(3, "Karl", "Spanien", 1, Alkoholtype.RØDVIN, 200);
 
-        List<Double> fejlMængder = new ArrayList<>();
-        fejlMængder.add(200.0);
-        fejlMængder.add(100.0);
+        List<Double> fejlMængder2 = new ArrayList<>();
+        fejlMængder2.add(200.0);
+        fejlMængder2.add(100.0);
 
-        Exception exception = assertThrows(IllegalArgumentException.class, () ->{
-            Controller.createPåfyldning(startDato, ansvarlig, fejlFad, fejlMængder, destillater);
+        Exception exception2 = assertThrows(IllegalArgumentException.class, () ->{
+            Controller.createPåfyldning(startDato, ansvarlig, fejlFad, fejlMængder2, destillater);
         });
-        assertEquals(exception.getMessage(), "Der er ikke plads på fadet");
+        assertEquals(exception2.getMessage(), "Der er ikke plads på fadet");
 
+        //TC3
+        List<Double> fejlMængder3 = new ArrayList<>();
+        fejlMængder3.add(0.0);
+        fejlMængder3.add(0.0);
+
+        Exception exception3 = assertThrows(IllegalArgumentException.class, () ->{
+            Controller.createPåfyldning(startDato, ansvarlig, fejlFad, fejlMængder3, destillater);
+        });
+        assertEquals(exception3.getMessage(), "Mængde skal være > 0");
+
+        //TC4
+        List<Double> fejlMængder4 = new ArrayList<>();
+        fejlMængder4.add(-10.0);
+        fejlMængder4.add(-50.0);
+
+        Exception exception4 = assertThrows(IllegalArgumentException.class, () ->{
+            Controller.createPåfyldning(startDato, ansvarlig, fejlFad, fejlMængder4, destillater);
+        });
+        assertEquals(exception4.getMessage(), "Mængde skal være > 0");
     }
 }

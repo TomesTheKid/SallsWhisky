@@ -18,9 +18,7 @@ public class Controller {
     public static Storage getStorage(){
         return storage;
     }
-    //-----------------------------------
-
-    //CreateMetoder
+    //-----DESTILLAT---------
     /**
      * Hvis startDato er efter slutDato kastes en IllegalArgumentException og
      * destillat oprettes ikke
@@ -64,8 +62,7 @@ public class Controller {
         }
     }
 
-
-
+    //---------FAD----------
     /**
      * Pre: nummer, leverandør, land, antalBrug, tidligereAlkoholindhold, størrelse != null
      * Tilføjer objketet til storage
@@ -82,6 +79,7 @@ public class Controller {
         return fad;
     }
 
+    //-------PÅFYLDNING---------
     /**
      * Hvis Listen med væskemængders totalmængde > fadet størrelse kastes en IllegalArgumentException
      * Pre: dato, ansvarlig, fad, væskeMængder != null
@@ -105,7 +103,6 @@ public class Controller {
         return påfyldning;
     }
 
-
     private static void validerMængder(List<Double> mængder, Fad fad) {
         double totalMængde = 0;
         for (Double m : mængder) {
@@ -119,13 +116,10 @@ public class Controller {
         }
     }
 
-
-
     // --- WhiskyProdukt ---
     /**
      * Opretter et WhiskyProdukt. For hvert par (påfyldning, mængde) oprettes et Fadbidrag,
      * som via sine set-metoder kobler sig selv til både Påfyldning og WhiskyProdukt.
-     * Pre: påfyldninger og mængder har samme størrelse og er ikke tomme
      */
     public static WhiskyProdukt createWhiskyProdukt(int batchID,
                                                     double vandMængde,
@@ -163,9 +157,6 @@ public class Controller {
         }
     }
 
-
-
-
     /**
      * Genererer en historisk rapport for et WhiskyProdukt og skriver den måske til en fil.
      * Pre: wp != null
@@ -175,8 +166,7 @@ public class Controller {
         // pladsHolder til at lave HistoriskRapport
     }
 
-
-    // Get metode
+    // ---------Get metode---------
     public static List<Destillat> getDestillater() {
         return new ArrayList<>(storage.getDestillater());
     }
@@ -189,9 +179,7 @@ public class Controller {
         return new ArrayList<>(storage.getWhiskyProdukter());
     }
 
-
-    // LAGER
-
+    // -----------LAGER-------------
     /**
      * Opretter et Lager og gemmer det i storage.
      * Pre: lagerNavn og adresse != null og ikke tomme

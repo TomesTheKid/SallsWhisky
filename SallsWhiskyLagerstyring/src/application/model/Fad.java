@@ -28,7 +28,7 @@ public class Fad implements Serializable {
         this.erAktiv = false;
     }
 
-    //Alle get metoder
+    //----------GET METODER---------------
     public int getNummer() {
         return nummer;
     }
@@ -58,6 +58,7 @@ public class Fad implements Serializable {
     public LagerPlacering getLagerPlacering(){
         return lagerPlacering;
     }
+    //-------------------------------------------------------
 
     /**
      * Sætter tovejslinket til LagerPlacering.
@@ -75,7 +76,6 @@ public class Fad implements Serializable {
             }
         }
     }
-
 
     //------------------------------------------------------------------------------------
     //Link til Påfyldning-Klasse

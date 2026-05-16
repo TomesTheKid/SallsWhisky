@@ -36,7 +36,7 @@ public class Destillat implements Serializable {
         this.aktuelMængdeVæske = aktuelMængdeVæske;
     }
 
-    //Alle get metoder
+    //--------GET METODER--------
     public LocalDate getStartDato() {
         return startDato;
     }
@@ -88,6 +88,7 @@ public class Destillat implements Serializable {
         this.slutDato = LocalDate.now();
     }
 
+    //---------------------------------------------------
     /**
      * Reducere destillates aktuelMængdeVæske, hvis mængden > aktuelMængdeVæske
      * kastes en IllegalArgumentException og der bliver ikke reduceret
@@ -102,6 +103,7 @@ public class Destillat implements Serializable {
         }
         aktuelMængdeVæske -= mængde;
     }
+    //-------------------------------------------
 
     public String toReportLine() {
         return " | ID: " + ID

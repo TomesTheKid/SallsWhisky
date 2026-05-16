@@ -23,7 +23,7 @@ public class Påfyldning implements Serializable {
         fad.optælAntalBrug();
     }
 
-    //Get metoder
+    //---------GET METODER------------
     public LocalDate getDato() {
         return dato;
     }
@@ -37,7 +37,7 @@ public class Påfyldning implements Serializable {
     }
 
     //-------------------------------------------------
-    //Link til Fad-Klasse
+    //Link til Fad
     public Fad getFad() {
         return fad;
     }
