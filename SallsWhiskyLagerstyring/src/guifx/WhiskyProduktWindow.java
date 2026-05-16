@@ -23,7 +23,6 @@ public class WhiskyProduktWindow extends Stage {
     // Fadbidrag-opbygning
     private final List<Påfyldning> valgtePåfyldninger = new ArrayList<>();
     private final List<Double> valgteMængder = new ArrayList<>();
-    private final ObservableList<Påfyldning> påfyldningerIFad = FXCollections.observableArrayList();
     private final ObservableList<String> visningList = FXCollections.observableArrayList();
 
     private ComboBox<Fad> cbFad;
@@ -101,13 +100,23 @@ public class WhiskyProduktWindow extends Stage {
         cbFad = new ComboBox<>(FXCollections.observableArrayList(Controller.getFadeModneTilAftapning()));
         cbFad.setPrefWidth(200);
         pane.add(cbFad, 3, 0);
-        cbFad.setOnAction(e -> opdaterPåfyldninger());
         cbKunModne.setOnAction(e -> opdaterFadListe());
 
         pane.add(new Label("Påfyldning:"), 2, 1);
-        cbPåfyldning = new ComboBox<>(påfyldningerIFad);
+        cbPåfyldning = new ComboBox<>();
         cbPåfyldning.setPrefWidth(200);
         pane.add(cbPåfyldning, 3, 1);
+
+        cbFad.setOnAction(e -> {
+            Fad fad = cbFad.getSelectionModel().getSelectedItem();
+            if (fad != null) {
+                cbPåfyldning.setItems(FXCollections.observableArrayList(fad.getPåfyldninger()));
+            } else {
+                cbPåfyldning.getItems().clear();
+            }
+            cbPåfyldning.getSelectionModel().clearSelection();
+        });
+
 
         pane.add(new Label("Mængde (L):"), 2, 2);
         txfMængde = new TextField(); txfMængde.setPromptText("fx 80");
@@ -141,14 +150,6 @@ public class WhiskyProduktWindow extends Stage {
         btnGem.setOnAction(e -> okAction());
     }
 
-    private void opdaterPåfyldninger() {
-        Fad fad = cbFad.getSelectionModel().getSelectedItem();
-        påfyldningerIFad.clear();
-        if (fad != null) {
-            påfyldningerIFad.setAll(fad.getPåfyldninger());
-        }
-        cbPåfyldning.getSelectionModel().clearSelection();
-    }
 
     private void opdaterFadListe() {
         if (cbKunModne.isSelected()) {
@@ -157,37 +158,27 @@ public class WhiskyProduktWindow extends Stage {
             cbFad.setItems(FXCollections.observableArrayList(Controller.getFade()));
         }
         cbFad.getSelectionModel().clearSelection();
-        påfyldningerIFad.clear();
+        cbPåfyldning.getItems().clear();
     }
 
     private void tilføjFadbidrag() {
         lblError.setText("");
-        Påfyldning p = cbPåfyldning.getSelectionModel().getSelectedItem();
-        if (p == null) {
-            lblError.setText("Vælg en påfyldning.");
-            return;
-        }
+        // ÆNDRET: læs påfyldning i stedet for fad
+        Påfyldning påfyldning = cbPåfyldning.getSelectionModel().getSelectedItem();
+        if (påfyldning == null) { lblError.setText("Vælg en påfyldning."); return; }
         double mængde;
         try {
             mængde = Double.parseDouble(txfMængde.getText().trim());
-        } catch (NumberFormatException ex) {
-            lblError.setText("Mængde skal være et tal.");
-            return;
-        }
-        if (mængde <= 0) {
-            lblError.setText("Mængde skal være > 0.");
-            return;
-        }
-        valgtePåfyldninger.add(p);
+        } catch (NumberFormatException ex) { lblError.setText("Mængde skal være et tal."); return; }
+        if (mængde <= 0) { lblError.setText("Mængde skal være > 0."); return; }
+        valgtePåfyldninger.add(påfyldning);
         valgteMængder.add(mængde);
-        visningList.add(String.format("%.1f L fra fad nr. %d (%s)",
-                mængde,
-                p.getFad() != null ? p.getFad().getNummer() : -1,
-                p.getDato()));
+        visningList.add(String.format("%.1f L - %s (fad %d)", mængde, påfyldning, påfyldning.getFad().getNummer()));
         txfMængde.clear();
-        // Fjern valgte påfyldning så den ikke kan tilføjes to gange
-        påfyldningerIFad.remove(p);
     }
+
+
+
 
     private void okAction() {
         lblError.setText("");
