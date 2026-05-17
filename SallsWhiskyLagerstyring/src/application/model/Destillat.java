@@ -96,7 +96,7 @@ public class Destillat implements Serializable {
      */
     public void reducerAktuelMængdeVæske(double mængde){
         if(mængde < 0){
-            return;
+            throw new IllegalArgumentException("Mængde må ikke være negativ");
         }
         if(mængde > aktuelMængdeVæske){
             throw new IllegalArgumentException("Ikke nok destillat tilbage");

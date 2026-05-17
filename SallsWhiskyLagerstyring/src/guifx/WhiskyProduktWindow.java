@@ -154,13 +154,15 @@ public class WhiskyProduktWindow extends Stage {
         } catch (NumberFormatException ex) { lblError.setText("Mængde skal være et tal."); return; }
         if (mængde <= 0) { lblError.setText("Mængde skal være > 0."); return; }
 
-        double fadTotal = 0;
-        for (Påfyldning p : påfyldninger) fadTotal += p.getSamletPåfyldtMængde();
-        if (fadTotal == 0) { lblError.setText("Faddet har ingen registreret væske."); return; }
-
-        for (Påfyldning p : påfyldninger) {
-            valgtePåfyldninger.add(p);
-            valgteMængder.add(mængde * (p.getSamletPåfyldtMængde() / fadTotal));
+        try {
+            List<Double> proportioner = Controller.beregnProportionaleMængder(fad, mængde);
+            for (int i = 0; i < påfyldninger.size(); i++) {
+                valgtePåfyldninger.add(påfyldninger.get(i));
+                valgteMængder.add(proportioner.get(i));
+            }
+        } catch (IllegalArgumentException ex) {
+            lblError.setText(ex.getMessage());
+            return;
         }
         visningList.add(String.format("%.1f L fra Fad %d", mængde, fad.getNummer()));
         txfMængde.clear();

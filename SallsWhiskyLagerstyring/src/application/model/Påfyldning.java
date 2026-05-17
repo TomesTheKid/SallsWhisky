@@ -20,7 +20,6 @@ public class Påfyldning implements Serializable {
         this.ansvarlig = ansvarlig;
         this.fad = fad;
         this.væskeMængder = new ArrayList<>();
-        fad.optælAntalBrug();
     }
 
     //---------GET METODER------------

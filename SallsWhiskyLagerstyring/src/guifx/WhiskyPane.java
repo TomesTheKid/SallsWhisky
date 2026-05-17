@@ -112,7 +112,7 @@ public class WhiskyPane extends GridPane {
     private void printRapport() {
         WhiskyProdukt wp = lvwWhisky.getSelectionModel().getSelectedItem();
         if(wp != null){
-            txaWhiskyDetaljer.setText(wp.genererHistoriskRapport());
+            txaWhiskyDetaljer.setText(Controller.genererHistoriskRapport(wp));
         }
     }
 }

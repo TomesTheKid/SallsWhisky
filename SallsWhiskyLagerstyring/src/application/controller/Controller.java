@@ -99,6 +99,7 @@ public class Controller {
             d.reducerAktuelMængdeVæske(m);
         }
 
+        fad.optælAntalBrug();
         fad.addPåfyldning(påfyldning);
         return påfyldning;
     }
@@ -162,14 +163,6 @@ public class Controller {
         }
     }
 
-    /**
-     * Genererer en historisk rapport for et WhiskyProdukt og skriver den måske til en fil.
-     * Pre: wp != null
-     */
-    // TODO
-    public static void gemHistoriskRapport(WhiskyProdukt whiskyProdukt) {
-        // pladsHolder til at lave HistoriskRapport
-    }
 
     // ---------Get metode---------
     public static List<Destillat> getDestillater() {
@@ -249,15 +242,36 @@ public class Controller {
 
     public static List<Fad> getFadeModneTilAftapning() {
         List<Fad> modne = new ArrayList<>();
-        LocalDate grænse = LocalDate.now().minusYears(3);
         for (Fad fad : storage.getFade()) {
-            for (Påfyldning p : fad.getPåfyldninger()) {
-                if (!p.getDato().isAfter(grænse)) {
-                    modne.add(fad);
-                    break;
-                }
-            }
+            if (erFadModent(fad)) modne.add(fad);
         }
         return modne;
+    }
+
+    private static boolean erFadModent(Fad fad) {
+        LocalDate grænse = LocalDate.now().minusYears(3);
+        boolean modent = !fad.getPåfyldninger().isEmpty();
+        for (Påfyldning p : fad.getPåfyldninger()) {
+            if (p.getDato().isAfter(grænse)) {
+                modent = false;
+            }
+        }
+        return modent;
+    }
+
+
+    public static String genererHistoriskRapport(WhiskyProdukt whiskyProdukt) {
+        return whiskyProdukt.genererHistoriskRapport();
+    }
+
+    public static List<Double> beregnProportionaleMængder(Fad fad, double mængde) {
+        double fadTotal = 0;
+        for (Påfyldning p : fad.getPåfyldninger()) fadTotal += p.getSamletPåfyldtMængde();
+        if (fadTotal == 0) throw new IllegalArgumentException("Faddet har ingen registreret væske.");
+        List<Double> result = new ArrayList<>();
+        for (Påfyldning p : fad.getPåfyldninger()) {
+            result.add(mængde * (p.getSamletPåfyldtMængde() / fadTotal));
+        }
+        return result;
     }
 }
