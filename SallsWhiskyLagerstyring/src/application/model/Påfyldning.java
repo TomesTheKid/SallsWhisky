@@ -12,7 +12,7 @@ public class Påfyldning implements Serializable {
     private final ArrayList<Fadbidrag> fadbidrags = new ArrayList<>();
 
     /**
-     * Opretter Påfyldning og tæller fadet antalBrug op med 1
+     * Opretter Påfyldning
      * Pre: dato, ansvarlig, fad != null
      */
     public Påfyldning(LocalDate dato, String ansvarlig, Fad fad){
