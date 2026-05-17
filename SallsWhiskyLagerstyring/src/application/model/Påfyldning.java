@@ -10,6 +10,7 @@ public class Påfyldning implements Serializable {
     private Fad fad;
     private ArrayList<VæskeMængde> væskeMængder;
     private final ArrayList<Fadbidrag> fadbidrags = new ArrayList<>();
+    private Omhældning omhældningKilde;
 
     /**
      * Opretter Påfyldning
@@ -73,6 +74,11 @@ public class Påfyldning implements Serializable {
             fadbidrag.setPåfyldning(null);
         }
     }
+
+    //-----------------------------------------------
+    //OnhældningKilde
+    public Omhældning getOmhældningKilde() { return omhældningKilde; }
+    public void setOmhældningKilde(Omhældning o) { this.omhældningKilde = o; }
     //-----------------------------------------------
     /**
      * Opretter VæskeMængde objekt og tilføjer det til Påfyldnings objektets Liste over væskemængder
@@ -100,6 +106,14 @@ public class Påfyldning implements Serializable {
     //----------------------------------------------------
 
     public void appendReportBlock(StringBuilder sb) {
+        if (omhældningKilde != null) {
+            sb.append("  [Omhældt ").append(omhældningKilde.getDato())
+                    .append(" af ").append(omhældningKilde.getAnsvarlig()).append("]\n");
+            for (OmhældningBidrag b : omhældningKilde.getBidrag()) {
+                sb.append("    Fra fad ").append(b.getKilde().getFad().getNummer())
+                        .append(": ").append(String.format("%.1f", b.getMængde())).append(" L\n");
+            }
+        }
         sb.append("  Påfyldningsdato: ").append(dato).append("\n");
         sb.append("  Ansvarlig:       ").append(ansvarlig).append("\n");
         if (fad != null) {
