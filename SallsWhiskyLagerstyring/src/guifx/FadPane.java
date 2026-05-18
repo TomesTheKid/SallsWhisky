@@ -53,10 +53,6 @@ public class FadPane extends GridPane {
         btnOpretFad.setOnAction(e -> openFadWindow());
         btnPaafylning.setOnAction(e -> openPåfyldningWindow());
 
-        Button btnOmhældning = new Button("Registrer omhældning");
-        hbxButtons.getChildren().add(btnOmhældning);
-        btnOmhældning.setOnAction(e -> openOmhældningWindow());
-
         lvwFade.getSelectionModel().selectedItemProperty()
                 .addListener((obs, oldV, newV) -> selectedFadChanged());
 
@@ -111,12 +107,6 @@ public class FadPane extends GridPane {
 
     private void openPåfyldningWindow() {
         PåfyldningWindow window = new PåfyldningWindow(owner, lvwFade.getSelectionModel().getSelectedItem());
-        window.showAndWait();
-        refresh();
-    }
-
-    private void openOmhældningWindow() {
-        OmhældningWindow window = new OmhældningWindow(owner);
         window.showAndWait();
         refresh();
     }
