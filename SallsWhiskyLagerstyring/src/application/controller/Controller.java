@@ -104,10 +104,14 @@ public class Controller {
         return påfyldning;
     }
 
-    private static void validerMængder(List<Double> mængder, Fad fad) {
-        if(fad.getPåfyldninger().size() >= 3){
+    private static void validerPåfyldningAntal(Fad fad) {
+        if (fad.getPåfyldninger().size() >= 3) {
             throw new IllegalArgumentException("Et fad må kun fyldes op til 3 gange");
         }
+    }
+
+    private static void validerMængder(List<Double> mængder, Fad fad) {
+        validerPåfyldningAntal(fad);
         double nyMængde = 0;
         for (Double m : mængder) {
             if (m == null || m <= 0) {
@@ -116,7 +120,7 @@ public class Controller {
             nyMængde += m;
         }
         double optaget = 0;
-        for(Påfyldning p : fad.getPåfyldninger()) optaget += p.getSamletPåfyldtMængde();
+        for (Påfyldning p : fad.getPåfyldninger()) optaget += p.getSamletPåfyldtMængde();
         if (optaget + nyMængde > fad.getStørrelse()) {
             throw new IllegalArgumentException("Der er ikke plads på fadet");
         }
@@ -126,7 +130,7 @@ public class Controller {
 
     public static Påfyldning createOmhældning(LocalDate dato, String ansvarlig,
                                               Fad destinationFad,
-                                              List<Påfyldning> kilder,
+                                              List<Fad> kildeFade,
                                               List<Double> mængder) {
         validerMængder(mængder, destinationFad);
 
@@ -134,14 +138,26 @@ public class Controller {
         Påfyldning nyPåfyldning = new Påfyldning(dato, ansvarlig, destinationFad);
         nyPåfyldning.setOmhældningKilde(omhældning);
 
-        for (int i = 0; i < kilder.size(); i++) {
-            Påfyldning kilde = kilder.get(i);
-            double mængde = mængder.get(i);
-            omhældning.addBidrag(new OmhældningBidrag(mængde, kilde));
-            for (VæskeMængde vm : kilde.getVæskeMængder()) {
-                double forholdsmæssig = mængde * (vm.getMængde() / kilde.getSamletPåfyldtMængde());
-                vm.reducerMængde(forholdsmæssig);
-                nyPåfyldning.createVæskeMængde(forholdsmæssig, vm.getDestillat());
+        for (int i = 0; i < kildeFade.size(); i++) {
+            Fad kildeFad = kildeFade.get(i);
+            double totalMængde = mængder.get(i);
+
+            double fadTotal = 0;
+            for (Påfyldning p : kildeFad.getPåfyldninger()) {
+                fadTotal += p.getSamletPåfyldtMængde();
+            }
+
+            for (Påfyldning kilde : kildeFad.getPåfyldninger()) {
+                double proportion = kilde.getSamletPåfyldtMængde() / fadTotal;
+                double mængdeFraDenne = totalMængde * proportion;
+                omhældning.addBidrag(new OmhældningBidrag(mængdeFraDenne, kilde));
+
+                for (VæskeMængde vm : kilde.getVæskeMængder()) {
+                    double forholdsvis = mængdeFraDenne *
+                            (vm.getMængde() / kilde.getSamletPåfyldtMængde());
+                    vm.reducerMængde(forholdsvis);
+                    nyPåfyldning.createVæskeMængde(forholdsvis, vm.getDestillat());
+                }
             }
         }
 
