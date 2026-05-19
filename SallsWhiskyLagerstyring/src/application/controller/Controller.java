@@ -122,6 +122,34 @@ public class Controller {
         }
     }
 
+    //-------OMHÆLDNING---------
+
+    public static Påfyldning createOmhældning(LocalDate dato, String ansvarlig,
+                                              Fad destinationFad,
+                                              List<Påfyldning> kilder,
+                                              List<Double> mængder) {
+        validerMængder(mængder, destinationFad);
+
+        Omhældning omhældning = new Omhældning(dato, ansvarlig);
+        Påfyldning nyPåfyldning = new Påfyldning(dato, ansvarlig, destinationFad);
+        nyPåfyldning.setOmhældningKilde(omhældning);
+
+        for (int i = 0; i < kilder.size(); i++) {
+            Påfyldning kilde = kilder.get(i);
+            double mængde = mængder.get(i);
+            omhældning.addBidrag(new OmhældningBidrag(mængde, kilde));
+            for (VæskeMængde vm : kilde.getVæskeMængder()) {
+                double forholdsmæssig = mængde * (vm.getMængde() / kilde.getSamletPåfyldtMængde());
+                vm.reducerMængde(forholdsmæssig);
+                nyPåfyldning.createVæskeMængde(forholdsmæssig, vm.getDestillat());
+            }
+        }
+
+        destinationFad.optælAntalBrug();
+        destinationFad.addPåfyldning(nyPåfyldning);
+        return nyPåfyldning;
+    }
+
     // --- WhiskyProdukt ---
     /**
      * Opretter et WhiskyProdukt. For hvert par (påfyldning, mængde) oprettes et Fadbidrag,
