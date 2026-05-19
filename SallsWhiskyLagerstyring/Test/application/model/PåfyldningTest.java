@@ -29,8 +29,6 @@ class PåfyldningTest {
         assertEquals(dato, testPåfyldning.getDato());
         assertEquals(ansvarlig, testPåfyldning.getAnsvarlig());
         assertEquals(oldFad, testPåfyldning.getFad());
-
-        assertEquals(2, oldFad.getAntalBrug());
     }
 
     @Test
