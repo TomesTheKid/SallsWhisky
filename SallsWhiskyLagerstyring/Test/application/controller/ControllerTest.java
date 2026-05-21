@@ -179,7 +179,7 @@ class ControllerTest {
         Exception exception3 = assertThrows(IllegalArgumentException.class, () ->{
             Controller.createPåfyldning(startDato, ansvarlig, fejlFad, fejlMængder3, destillater);
         });
-        assertEquals(exception3.getMessage(), "Mængde skal være > 0");
+        assertEquals(exception3.getMessage(), "Mængde skal være over 0");
 
         //TC4
         List<Double> fejlMængder4 = new ArrayList<>();
@@ -189,6 +189,6 @@ class ControllerTest {
         Exception exception4 = assertThrows(IllegalArgumentException.class, () ->{
             Controller.createPåfyldning(startDato, ansvarlig, fejlFad, fejlMængder4, destillater);
         });
-        assertEquals(exception4.getMessage(), "Mængde skal være > 0");
+        assertEquals(exception4.getMessage(), "Mængde skal være over 0");
     }
 }
