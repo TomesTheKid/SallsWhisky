@@ -1,8 +1,7 @@
 # SallsWhisky - Lagerstyring
 
-På 2. semester af datamatikeruddannelsen har vi i grupper af 3 skullet lave et lagerstyringssystem til et whiskydestilleri.
-Vi har skulle starte helt fra bunden, hvor vi skulle lave en forretningsrapport om Sall Whisky, og derefter skulle vi
-også udvikle use cases, klassediagrammer, designklassediagrammer osv.
+På 2. semester af datamatikeruddannelsen har vi i grupper af 3 skulle lave et lagerstyringssystem til et whiskydestilleri.
+Vi har starte helt fra bunden, hvor vi skulle lave en forretningsrapport om Sall Whisky, og derefter udvikle vi use cases, klassediagrammer, designklassediagrammer osv.
 Systemets opgave er at holde styr på hele vejen fra destillat til færdig whisky. Man skal kunne se, hvilke destillater der
 er lavet, hvad der er i destillatet, hvilke fade de er hældt på, hvor fadene ligger på lageret, og hvornår de er
 klar til aftapning.
@@ -10,14 +9,13 @@ klar til aftapning.
 ## Funktioner
 - Registrering af destillater (kornsort, mængde, alkoholprocent, rygning)
 - Oprettelse af fade og påfyldning af destillat på fade
-- Omhældning mellem fade med beregning af proportionale mængder
 - Lagre med placering af fade på reol, række og hylde samt flytning af fade
 - Oversigt over fade, der er klar til aftapning
 - Oprettelse af whiskyprodukter og en historisk rapport over, hvad et produkt består af
 - Data gemmes mellem kørsler
 
 ## Teknologier
-- Java 21
+- Java 
 - JavaFX
 - JUnit 5
 
