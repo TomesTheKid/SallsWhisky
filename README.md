@@ -22,7 +22,7 @@ klar til aftapning.
 ## Min rolle
 Mine primære opgaver i projektet var test, klasseopsætning og controller-metoder.
 Jeg stod for at lave de forskellige testcases og programmere dem med JUnit,
-blandt andet tests af påfyldning, whiskyprodukter og controlleren. Udover det hjalp jeg også
+blandt andet tests af påfyldning, whiskyprodukter og controlleren. Ud over det hjalp jeg også
 med at programmere nogle af klasserne og controller-metoderne.
 
 ## Sådan køres projektet
